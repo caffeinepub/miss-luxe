@@ -1,0 +1,126 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: oklch(0.08 0.005 60);
+    --foreground: oklch(0.92 0.02 80);
+
+    --card: oklch(0.10 0.005 60);
+    --card-foreground: oklch(0.92 0.02 80);
+
+    --popover: oklch(0.10 0.005 60);
+    --popover-foreground: oklch(0.92 0.02 80);
+
+    --primary: oklch(0.78 0.12 80);
+    --primary-foreground: oklch(0.08 0.005 60);
+
+    --secondary: oklch(0.15 0.01 60);
+    --secondary-foreground: oklch(0.92 0.02 80);
+
+    --muted: oklch(0.15 0.01 60);
+    --muted-foreground: oklch(0.60 0.02 80);
+
+    --accent: oklch(0.78 0.12 80);
+    --accent-foreground: oklch(0.08 0.005 60);
+
+    --destructive: oklch(0.55 0.22 25);
+    --destructive-foreground: oklch(0.98 0 0);
+
+    --border: oklch(0.78 0.12 80 / 0.2);
+    --input: oklch(0.78 0.12 80 / 0.15);
+    --ring: oklch(0.78 0.12 80 / 0.5);
+
+    --radius: 0px;
+
+    /* Luxury brand tokens */
+    --luxury-black: oklch(0.08 0.005 60);
+    --luxury-gold: oklch(0.78 0.12 80);
+    --luxury-beige: oklch(0.92 0.02 80);
+  }
+
+  .dark {
+    --background: oklch(0.08 0.005 60);
+    --foreground: oklch(0.92 0.02 80);
+    --card: oklch(0.10 0.005 60);
+    --card-foreground: oklch(0.92 0.02 80);
+    --popover: oklch(0.10 0.005 60);
+    --popover-foreground: oklch(0.92 0.02 80);
+    --primary: oklch(0.78 0.12 80);
+    --primary-foreground: oklch(0.08 0.005 60);
+    --secondary: oklch(0.15 0.01 60);
+    --secondary-foreground: oklch(0.92 0.02 80);
+    --muted: oklch(0.15 0.01 60);
+    --muted-foreground: oklch(0.60 0.02 80);
+    --accent: oklch(0.78 0.12 80);
+    --accent-foreground: oklch(0.08 0.005 60);
+    --destructive: oklch(0.55 0.22 25);
+    --destructive-foreground: oklch(0.98 0 0);
+    --border: oklch(0.78 0.12 80 / 0.2);
+    --input: oklch(0.78 0.12 80 / 0.15);
+    --ring: oklch(0.78 0.12 80 / 0.5);
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-luxury-black text-luxury-beige;
+    font-family: 'Montserrat', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+@layer components {
+  .btn-gold {
+    @apply bg-luxury-gold text-luxury-black font-sans font-semibold text-xs tracking-widest uppercase transition-all duration-300 hover:bg-luxury-beige cursor-pointer;
+  }
+
+  .gold-divider {
+    @apply w-16 h-px mx-auto my-6;
+    background-color: oklch(0.78 0.12 80 / 0.5);
+  }
+
+  .nav-link {
+    @apply relative font-sans text-sm tracking-widest uppercase transition-colors duration-200;
+    color: oklch(0.92 0.02 80 / 0.7);
+  }
+
+  .nav-link:hover {
+    color: oklch(0.78 0.12 80);
+  }
+
+  .nav-link::after {
+    content: '';
+    @apply absolute bottom-0 left-0 w-0 h-px transition-all duration-300;
+    background-color: oklch(0.78 0.12 80);
+  }
+
+  .nav-link:hover::after {
+    @apply w-full;
+  }
+
+  .product-card {
+    @apply relative overflow-hidden transition-all duration-500;
+    border: 1px solid oklch(0.78 0.12 80 / 0.1);
+  }
+
+  .product-card:hover {
+    border-color: oklch(0.78 0.12 80 / 0.4);
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
