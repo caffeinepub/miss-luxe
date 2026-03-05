@@ -19,6 +19,8 @@ import HeroSection from "./components/HeroSection";
 import InstagramSection from "./components/InstagramSection";
 import Navigation from "./components/Navigation";
 import ProductsSection from "./components/ProductsSection";
+import RamadanEidBanner from "./components/RamadanEidBanner";
+import { CartProvider } from "./context/CartContext";
 
 // ─── Lazy loaded pages ────────────────────────────────────────────────────────
 import AboutPage from "./pages/AboutPage";
@@ -36,6 +38,7 @@ function HomePage() {
       <Navigation onCartOpen={() => setCartOpen(true)} />
       <CartDrawer open={cartOpen} onClose={() => setCartOpen(false)} />
       <main>
+        <RamadanEidBanner />
         <HeroSection />
         <AboutSection />
         <ProductsSection />
@@ -402,5 +405,9 @@ declare module "@tanstack/react-router" {
 }
 
 export default function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <CartProvider>
+      <RouterProvider router={router} />
+    </CartProvider>
+  );
 }
