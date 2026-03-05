@@ -1,10 +1,10 @@
-import { Phone } from 'lucide-react';
-import { SiInstagram, SiWhatsapp } from 'react-icons/si';
+import { Phone } from "lucide-react";
+import { SiInstagram, SiWhatsapp } from "react-icons/si";
 
 export default function Footer() {
   const year = new Date().getFullYear();
   const appId = encodeURIComponent(
-    typeof window !== 'undefined' ? window.location.hostname : 'miss-luxe'
+    typeof window !== "undefined" ? window.location.hostname : "miss-luxe",
   );
 
   return (
@@ -20,7 +20,8 @@ export default function Footer() {
               Artisan Chocolates
             </div>
             <p className="font-sans text-luxury-beige/50 text-sm font-light leading-relaxed">
-              Handcrafted luxury date chocolates for every celebration. Made with love in India.
+              Handcrafted luxury date chocolates for every celebration. Made
+              with love in India.
             </p>
           </div>
 
@@ -31,12 +32,12 @@ export default function Footer() {
             </h4>
             <ul className="space-y-3">
               {[
-                { label: 'Our Story', href: '/about' },
-                { label: 'Track Order', href: '/track' },
-                { label: 'Privacy Policy', href: '/privacy' },
-                { label: 'Shipping Policy', href: '/shipping' },
-                { label: 'Returns & Refunds', href: '/returns' },
-                { label: 'Terms of Service', href: '/terms' },
+                { label: "Our Story", href: "/about" },
+                { label: "Track Order", href: "/track" },
+                { label: "Privacy Policy", href: "/privacy" },
+                { label: "Shipping Policy", href: "/shipping" },
+                { label: "Returns & Refunds", href: "/returns" },
+                { label: "Terms of Service", href: "/terms" },
               ].map((link) => (
                 <li key={link.href}>
                   <a
@@ -97,7 +98,7 @@ export default function Footer() {
             © {year} Miss Luxe. All rights reserved.
           </p>
           <p className="font-sans text-luxury-beige/30 text-xs">
-            Built with <span className="text-luxury-gold/60">♥</span> using{' '}
+            Built with <span className="text-luxury-gold/60">♥</span> using{" "}
             <a
               href={`https://caffeine.ai/?utm_source=Caffeine-footer&utm_medium=referral&utm_content=${appId}`}
               target="_blank"

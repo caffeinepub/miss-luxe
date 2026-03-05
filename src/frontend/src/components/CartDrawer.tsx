@@ -1,5 +1,5 @@
-import { X, Minus, Plus, ShoppingBag } from 'lucide-react';
-import { useCart } from '../context/CartContext';
+import { Minus, Plus, ShoppingBag, X } from "lucide-react";
+import { useCart } from "../context/CartContext";
 
 interface CartDrawerProps {
   open: boolean;
@@ -13,20 +13,22 @@ function buildCustomisationSummary(customisation: {
   greetingCard?: boolean;
 }): string {
   const parts: string[] = [];
-  if (customisation.ribbonColor) parts.push(`${customisation.ribbonColor} ribbon`);
+  if (customisation.ribbonColor)
+    parts.push(`${customisation.ribbonColor} ribbon`);
   if (customisation.packagingStyle) parts.push(customisation.packagingStyle);
-  if (customisation.giftMessage) parts.push('Gift message included');
-  if (customisation.greetingCard) parts.push('Greeting card (+₹50)');
-  return parts.join(' • ');
+  if (customisation.giftMessage) parts.push("Gift message included");
+  if (customisation.greetingCard) parts.push("Greeting card (+₹50)");
+  return parts.join(" • ");
 }
 
 export default function CartDrawer({ open, onClose }: CartDrawerProps) {
-  const { items, removeItem, updateQuantity, totalPrice, totalItems } = useCart();
+  const { items, removeItem, updateQuantity, totalPrice, totalItems } =
+    useCart();
 
   const whatsappCheckout = () => {
     if (items.length === 0) return;
     const orderText = items
-      .map(item => {
+      .map((item) => {
         const greetingExtra = item.customisation?.greetingCard ? 50 : 0;
         const unitPrice = item.price + greetingExtra;
         const subtotal = unitPrice * item.quantity;
@@ -40,9 +42,12 @@ export default function CartDrawer({ open, onClose }: CartDrawerProps) {
         }
         return line;
       })
-      .join('\n');
+      .join("\n");
     const message = `Hello Miss Luxe! I'd like to place an order:\n\n${orderText}\n\n*Total: ₹${totalPrice.toLocaleString()}*\n\n💳 Prepaid Order\nPlease share payment details to confirm. Thank you! 🖤✨`;
-    window.open(`https://wa.me/917045899262?text=${encodeURIComponent(message)}`, '_blank');
+    window.open(
+      `https://wa.me/917045899262?text=${encodeURIComponent(message)}`,
+      "_blank",
+    );
   };
 
   return (
@@ -52,17 +57,20 @@ export default function CartDrawer({ open, onClose }: CartDrawerProps) {
         <div
           className="fixed inset-0 bg-black/70 z-40 transition-opacity"
           onClick={onClose}
-          aria-hidden="true"
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") onClose();
+          }}
+          tabIndex={0}
+          role="button"
+          aria-label="Close cart"
         />
       )}
 
       {/* Drawer */}
       <div
         className={`fixed top-0 right-0 h-full w-full max-w-sm bg-luxury-black border-l border-luxury-gold/20 z-50 transition-transform duration-300 ease-in-out flex flex-col ${
-          open ? 'translate-x-0' : 'translate-x-full'
+          open ? "translate-x-0" : "translate-x-full"
         }`}
-        role="dialog"
-        aria-modal="true"
         aria-label="Shopping cart"
       >
         {/* Header */}
@@ -70,8 +78,12 @@ export default function CartDrawer({ open, onClose }: CartDrawerProps) {
           <div className="flex items-center gap-3">
             <ShoppingBag className="w-5 h-5 text-luxury-gold" />
             <div>
-              <h2 className="font-serif text-luxury-beige text-lg leading-none">Your Cart</h2>
-              <p className="font-sans text-luxury-gold/40 text-[9px] tracking-[0.4em] uppercase mt-0.5">Miss Luxe</p>
+              <h2 className="font-serif text-luxury-beige text-lg leading-none">
+                Your Cart
+              </h2>
+              <p className="font-sans text-luxury-gold/40 text-[9px] tracking-[0.4em] uppercase mt-0.5">
+                Miss Luxe
+              </p>
             </div>
             {totalItems > 0 && (
               <span className="bg-luxury-gold text-luxury-black text-xs font-sans font-bold w-5 h-5 rounded-full flex items-center justify-center">
@@ -94,22 +106,27 @@ export default function CartDrawer({ open, onClose }: CartDrawerProps) {
           {items.length === 0 ? (
             <div className="text-center py-16">
               <ShoppingBag className="w-12 h-12 text-luxury-gold/30 mx-auto mb-4" />
-              <p className="text-luxury-beige/50 font-sans font-light">Your cart is empty</p>
+              <p className="text-luxury-beige/50 font-sans font-light">
+                Your cart is empty
+              </p>
               <p className="text-luxury-beige/30 font-sans text-sm mt-1">
                 Add some luxury to your life
               </p>
             </div>
           ) : (
-            items.map(item => {
+            items.map((item) => {
               const greetingExtra = item.customisation?.greetingCard ? 50 : 0;
               const unitPrice = item.price + greetingExtra;
               const subtotal = unitPrice * item.quantity;
               const customSummary = item.customisation
                 ? buildCustomisationSummary(item.customisation)
-                : '';
+                : "";
 
               return (
-                <div key={item.id} className="flex gap-4 py-4 border-b border-luxury-gold/10">
+                <div
+                  key={item.id}
+                  className="flex gap-4 py-4 border-b border-luxury-gold/10"
+                >
                   <div className="relative w-16 h-16 shrink-0 bg-gradient-to-br from-zinc-900 via-black to-amber-950/40 overflow-hidden">
                     <img
                       src={item.image}
@@ -117,13 +134,14 @@ export default function CartDrawer({ open, onClose }: CartDrawerProps) {
                       className="w-full h-full object-cover"
                       onError={(e) => {
                         const img = e.currentTarget;
-                        img.style.display = 'none';
+                        img.style.display = "none";
                         const parent = img.parentElement;
-                        if (parent && !parent.querySelector('.img-fallback')) {
-                          const fallback = document.createElement('div');
-                          fallback.className = 'img-fallback w-full h-full bg-gradient-to-br from-zinc-900 via-black to-amber-950/40';
-                          fallback.style.position = 'absolute';
-                          fallback.style.inset = '0';
+                        if (parent && !parent.querySelector(".img-fallback")) {
+                          const fallback = document.createElement("div");
+                          fallback.className =
+                            "img-fallback w-full h-full bg-gradient-to-br from-zinc-900 via-black to-amber-950/40";
+                          fallback.style.position = "absolute";
+                          fallback.style.inset = "0";
                           parent.appendChild(fallback);
                         }
                       }}
@@ -139,7 +157,7 @@ export default function CartDrawer({ open, onClose }: CartDrawerProps) {
                       </p>
                     )}
                     <p className="text-luxury-beige/50 font-sans text-xs mb-2">
-                      ₹{unitPrice.toLocaleString()} × {item.quantity} ={' '}
+                      ₹{unitPrice.toLocaleString()} × {item.quantity} ={" "}
                       <span className="text-luxury-gold font-medium">
                         ₹{subtotal.toLocaleString()}
                       </span>
@@ -147,7 +165,9 @@ export default function CartDrawer({ open, onClose }: CartDrawerProps) {
                     <div className="flex items-center gap-2">
                       <button
                         type="button"
-                        onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                        onClick={() =>
+                          updateQuantity(item.id, item.quantity - 1)
+                        }
                         className="w-6 h-6 border border-luxury-gold/30 text-luxury-beige/70 hover:border-luxury-gold hover:text-luxury-gold transition-colors flex items-center justify-center"
                         aria-label="Decrease quantity"
                       >
@@ -158,7 +178,9 @@ export default function CartDrawer({ open, onClose }: CartDrawerProps) {
                       </span>
                       <button
                         type="button"
-                        onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                        onClick={() =>
+                          updateQuantity(item.id, item.quantity + 1)
+                        }
                         className="w-6 h-6 border border-luxury-gold/30 text-luxury-beige/70 hover:border-luxury-gold hover:text-luxury-gold transition-colors flex items-center justify-center"
                         aria-label="Increase quantity"
                       >
@@ -199,11 +221,13 @@ export default function CartDrawer({ open, onClose }: CartDrawerProps) {
               <span className="relative z-[1] flex items-center justify-center gap-2">
                 Order via WhatsApp
               </span>
-              <span className="absolute inset-0 z-0 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300"
+              <span
+                className="absolute inset-0 z-0 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300"
                 style={{
-                  background: 'linear-gradient(90deg, transparent 0%, oklch(0.92 0.02 80 / 0.2) 50%, transparent 100%)',
-                  backgroundSize: '200% 100%',
-                  animation: 'shimmer 2s linear infinite',
+                  background:
+                    "linear-gradient(90deg, transparent 0%, oklch(0.92 0.02 80 / 0.2) 50%, transparent 100%)",
+                  backgroundSize: "200% 100%",
+                  animation: "shimmer 2s linear infinite",
                 }}
               />
             </button>

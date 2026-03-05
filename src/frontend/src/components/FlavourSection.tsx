@@ -1,45 +1,54 @@
-import { useRef, useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from "react";
 
 const flavours = [
   {
-    id: 'pistachio',
-    name: 'Royal Pistachio Cream',
-    description: 'Roasted pistachios blended into velvety cream, draped in 72% dark Belgian chocolate',
-    image: '/assets/generated/flavour-pistachio.dim_600x600.jpg',
-    accent: 'Bestseller',
+    id: "pistachio",
+    name: "Royal Pistachio Cream",
+    description:
+      "Roasted pistachios blended into velvety cream, draped in 72% dark Belgian chocolate",
+    image: "/assets/generated/flavour-pistachio.dim_600x600.jpg",
+    accent: "Bestseller",
   },
   {
-    id: 'almond-rose',
-    name: 'Almond Rose',
-    description: 'Delicate almond paste infused with rose water, enrobed in white Belgian chocolate',
-    image: '/assets/generated/flavour-almond-rose.dim_600x600.jpg',
-    accent: 'Romantic',
+    id: "almond-rose",
+    name: "Almond Rose",
+    description:
+      "Delicate almond paste infused with rose water, enrobed in white Belgian chocolate",
+    image: "/assets/generated/flavour-almond-rose.dim_600x600.jpg",
+    accent: "Romantic",
   },
   {
-    id: 'saffron-caramel',
-    name: 'Saffron Caramel',
-    description: 'Golden saffron woven through silken caramel, finished with fleur de sel and milk chocolate',
-    image: '/assets/generated/flavour-saffron-caramel.dim_600x600.jpg',
-    accent: 'Signature',
+    id: "saffron-caramel",
+    name: "Saffron Caramel",
+    description:
+      "Golden saffron woven through silken caramel, finished with fleur de sel and milk chocolate",
+    image: "/assets/generated/flavour-saffron-caramel.dim_600x600.jpg",
+    accent: "Signature",
   },
   {
-    id: 'assorted',
-    name: 'Assorted Collection',
-    description: 'The full Miss Luxe experience — all signature flavours in one magnificent arrangement',
-    image: '/assets/generated/flavour-assorted.dim_600x600.jpg',
-    accent: 'All Flavours',
+    id: "assorted",
+    name: "Assorted Collection",
+    description:
+      "The full Miss Luxe experience — all signature flavours in one magnificent arrangement",
+    image: "/assets/generated/flavour-assorted.dim_600x600.jpg",
+    accent: "All Flavours",
   },
 ];
 
-function FlavourCard({ flavour, index }: { flavour: typeof flavours[0]; index: number }) {
+function FlavourCard({
+  flavour,
+  index,
+}: { flavour: (typeof flavours)[0]; index: number }) {
   const [visible, setVisible] = useState(false);
   const [imgLoaded, setImgLoaded] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setVisible(true); },
-      { threshold: 0.15 }
+      ([entry]) => {
+        if (entry.isIntersecting) setVisible(true);
+      },
+      { threshold: 0.15 },
     );
     if (ref.current) observer.observe(ref.current);
     return () => observer.disconnect();
@@ -47,13 +56,14 @@ function FlavourCard({ flavour, index }: { flavour: typeof flavours[0]; index: n
 
   const handleImgError = (e: React.SyntheticEvent<HTMLImageElement>) => {
     const img = e.currentTarget;
-    img.style.display = 'none';
+    img.style.display = "none";
     const parent = img.parentElement;
-    if (parent && !parent.querySelector('.img-fallback')) {
-      const fallback = document.createElement('div');
-      fallback.className = 'img-fallback w-full h-full bg-gradient-to-br from-zinc-900 via-amber-950/40 to-black';
-      fallback.style.position = 'absolute';
-      fallback.style.inset = '0';
+    if (parent && !parent.querySelector(".img-fallback")) {
+      const fallback = document.createElement("div");
+      fallback.className =
+        "img-fallback w-full h-full bg-gradient-to-br from-zinc-900 via-amber-950/40 to-black";
+      fallback.style.position = "absolute";
+      fallback.style.inset = "0";
       parent.appendChild(fallback);
     }
   };
@@ -64,7 +74,7 @@ function FlavourCard({ flavour, index }: { flavour: typeof flavours[0]; index: n
       className="group relative overflow-hidden cursor-pointer"
       style={{
         opacity: visible ? 1 : 0,
-        transform: visible ? 'translateY(0)' : 'translateY(32px)',
+        transform: visible ? "translateY(0)" : "translateY(32px)",
         transition: `opacity 0.6s ease ${index * 0.12}s, transform 0.6s ease ${index * 0.12}s`,
       }}
     >
@@ -93,9 +103,11 @@ function FlavourCard({ flavour, index }: { flavour: typeof flavours[0]; index: n
         </div>
 
         {/* Hover shimmer */}
-        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+        <div
+          className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
           style={{
-            background: 'linear-gradient(135deg, transparent 30%, oklch(0.78 0.12 80 / 0.08) 50%, transparent 70%)',
+            background:
+              "linear-gradient(135deg, transparent 30%, oklch(0.78 0.12 80 / 0.08) 50%, transparent 70%)",
           }}
         />
       </div>
@@ -118,9 +130,11 @@ export default function FlavourSection() {
   return (
     <section className="py-20 md:py-32 bg-luxury-black relative overflow-hidden">
       {/* Background texture */}
-      <div className="absolute inset-0 opacity-5"
+      <div
+        className="absolute inset-0 opacity-5"
         style={{
-          backgroundImage: 'radial-gradient(circle at 25% 50%, oklch(0.78 0.12 80) 0%, transparent 50%), radial-gradient(circle at 75% 50%, oklch(0.78 0.12 80) 0%, transparent 50%)',
+          backgroundImage:
+            "radial-gradient(circle at 25% 50%, oklch(0.78 0.12 80) 0%, transparent 50%), radial-gradient(circle at 75% 50%, oklch(0.78 0.12 80) 0%, transparent 50%)",
         }}
       />
 
@@ -134,7 +148,8 @@ export default function FlavourSection() {
             Signature Flavours
           </h2>
           <p className="font-sans text-luxury-beige/50 text-sm font-light mb-6 max-w-xl mx-auto">
-            Each flavour is a carefully composed experience — premium ingredients, hand-finished with precision and artistry
+            Each flavour is a carefully composed experience — premium
+            ingredients, hand-finished with precision and artistry
           </p>
           <div className="flex items-center justify-center gap-3">
             <div className="w-8 h-px bg-luxury-gold/50" />

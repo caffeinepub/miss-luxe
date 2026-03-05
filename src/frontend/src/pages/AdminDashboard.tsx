@@ -1,37 +1,37 @@
-import { useState } from 'react';
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
+  CheckCircle2,
+  ChevronDown,
+  Clock,
   LayoutDashboard,
-  LogIn,
   Loader2,
+  LogIn,
+  Package,
   RefreshCw,
   ShieldOff,
-  Package,
-  CheckCircle2,
-  Clock,
   TrendingUp,
-  ChevronDown,
-} from 'lucide-react';
-import Navigation from '../components/Navigation';
-import Footer from '../components/Footer';
-import CartDrawer from '../components/CartDrawer';
-import FloatingWhatsAppButton from '../components/FloatingWhatsAppButton';
-import { useInternetIdentity } from '../hooks/useInternetIdentity';
-import { useIsCallerAdmin, useGetAllOrders } from '../hooks/useQueries';
-import { useActor } from '../hooks/useActor';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { OrderStatus } from '../backend';
-import type { Order } from '../backend';
+} from "lucide-react";
+import { useState } from "react";
+import { OrderStatus } from "../backend";
+import type { Order } from "../backend";
+import CartDrawer from "../components/CartDrawer";
+import FloatingWhatsAppButton from "../components/FloatingWhatsAppButton";
+import Footer from "../components/Footer";
+import Navigation from "../components/Navigation";
+import { useActor } from "../hooks/useActor";
+import { useInternetIdentity } from "../hooks/useInternetIdentity";
+import { useGetAllOrders, useIsCallerAdmin } from "../hooks/useQueries";
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
 function formatDate(nanoseconds: bigint): string {
   const ms = Number(nanoseconds) / 1_000_000;
   const date = new Date(ms);
-  if (isNaN(date.getTime())) return 'N/A';
-  return date.toLocaleDateString('en-IN', {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
+  if (Number.isNaN(date.getTime())) return "N/A";
+  return date.toLocaleDateString("en-IN", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
   });
 }
 
@@ -49,8 +49,8 @@ function StatCard({ label, value, icon, accent }: StatCardProps) {
     <div
       className={`relative border p-6 transition-all duration-300 ${
         accent
-          ? 'border-luxury-gold/40 bg-luxury-gold/5'
-          : 'border-luxury-gold/15 bg-[oklch(0.10_0.005_60)]'
+          ? "border-luxury-gold/40 bg-luxury-gold/5"
+          : "border-luxury-gold/15 bg-[oklch(0.10_0.005_60)]"
       }`}
     >
       <div className="flex items-start justify-between gap-4">
@@ -60,14 +60,14 @@ function StatCard({ label, value, icon, accent }: StatCardProps) {
           </p>
           <p
             className={`font-serif text-4xl ${
-              accent ? 'text-luxury-gold' : 'text-luxury-beige'
+              accent ? "text-luxury-gold" : "text-luxury-beige"
             }`}
           >
             {value}
           </p>
         </div>
         <div
-          className={`mt-1 ${accent ? 'text-luxury-gold/70' : 'text-luxury-beige/20'}`}
+          className={`mt-1 ${accent ? "text-luxury-gold/70" : "text-luxury-beige/20"}`}
         >
           {icon}
         </div>
@@ -87,7 +87,7 @@ interface OrderRowProps {
 function OrderRow({ order, onToggleStatus, isUpdating }: OrderRowProps) {
   const isDelivered = order.status === OrderStatus.DELIVERED;
   const nextStatus = isDelivered ? OrderStatus.PENDING : OrderStatus.DELIVERED;
-  const principalShort = order.principal.toString().slice(0, 12) + '…';
+  const principalShort = `${order.principal.toString().slice(0, 12)}…`;
 
   return (
     <tr className="border-b border-luxury-gold/8 hover:bg-luxury-gold/3 transition-colors group">
@@ -118,8 +118,8 @@ function OrderRow({ order, onToggleStatus, isUpdating }: OrderRowProps) {
         <span
           className={`inline-flex items-center gap-1.5 px-3 py-1 font-sans text-[10px] uppercase tracking-widest border transition-colors ${
             isDelivered
-              ? 'border-luxury-gold/50 bg-luxury-gold/10 text-luxury-gold'
-              : 'border-luxury-gold/20 bg-luxury-gold/4 text-luxury-beige/50'
+              ? "border-luxury-gold/50 bg-luxury-gold/10 text-luxury-gold"
+              : "border-luxury-gold/20 bg-luxury-gold/4 text-luxury-beige/50"
           }`}
         >
           {isDelivered ? (
@@ -127,7 +127,7 @@ function OrderRow({ order, onToggleStatus, isUpdating }: OrderRowProps) {
           ) : (
             <Clock className="w-3 h-3" />
           )}
-          {isDelivered ? 'Delivered' : 'Pending'}
+          {isDelivered ? "Delivered" : "Pending"}
         </span>
       </td>
       <td className="px-5 py-4">
@@ -137,8 +137,8 @@ function OrderRow({ order, onToggleStatus, isUpdating }: OrderRowProps) {
           onClick={() => onToggleStatus(order.id, nextStatus)}
           className={`flex items-center gap-1.5 font-sans text-[10px] uppercase tracking-widest border px-3 py-1.5 transition-all disabled:opacity-40 disabled:cursor-not-allowed ${
             isDelivered
-              ? 'border-luxury-beige/20 text-luxury-beige/50 hover:border-luxury-gold/40 hover:text-luxury-gold/70'
-              : 'border-luxury-gold/30 text-luxury-gold/70 hover:border-luxury-gold hover:text-luxury-gold'
+              ? "border-luxury-beige/20 text-luxury-beige/50 hover:border-luxury-gold/40 hover:text-luxury-gold/70"
+              : "border-luxury-gold/30 text-luxury-gold/70 hover:border-luxury-gold hover:text-luxury-gold"
           }`}
         >
           {isUpdating ? (
@@ -146,7 +146,7 @@ function OrderRow({ order, onToggleStatus, isUpdating }: OrderRowProps) {
           ) : (
             <ChevronDown className="w-3 h-3" />
           )}
-          {isDelivered ? 'Mark Pending' : 'Mark Delivered'}
+          {isDelivered ? "Mark Pending" : "Mark Delivered"}
         </button>
       </td>
     </tr>
@@ -159,16 +159,14 @@ export default function AdminDashboard() {
   const [cartOpen, setCartOpen] = useState(false);
   const [updatingId, setUpdatingId] = useState<bigint | null>(null);
 
-  const { identity, login, isLoggingIn, isInitializing } = useInternetIdentity();
+  const { identity, login, isLoggingIn, isInitializing } =
+    useInternetIdentity();
   const isAuthenticated = !!identity;
 
   const { actor } = useActor();
   const queryClient = useQueryClient();
 
-  const {
-    data: isAdmin,
-    isLoading: isAdminLoading,
-  } = useIsCallerAdmin();
+  const { data: isAdmin, isLoading: isAdminLoading } = useIsCallerAdmin();
 
   const {
     data: orders,
@@ -185,11 +183,11 @@ export default function AdminDashboard() {
       orderId: bigint;
       newStatus: OrderStatus;
     }) => {
-      if (!actor) throw new Error('Actor not ready');
+      if (!actor) throw new Error("Actor not ready");
       await actor.updateSingleOrder(orderId, newStatus);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['allOrders'] });
+      queryClient.invalidateQueries({ queryKey: ["allOrders"] });
     },
   });
 
@@ -197,14 +195,16 @@ export default function AdminDashboard() {
     setUpdatingId(orderId);
     updateMutation.mutate(
       { orderId, newStatus },
-      { onSettled: () => setUpdatingId(null) }
+      { onSettled: () => setUpdatingId(null) },
     );
   };
 
   // ─── Stats ──────────────────────────────────────────────────────────────────
   const totalOrders = orders?.length ?? 0;
-  const pendingOrders = orders?.filter(o => o.status === OrderStatus.PENDING).length ?? 0;
-  const deliveredOrders = orders?.filter(o => o.status === OrderStatus.DELIVERED).length ?? 0;
+  const pendingOrders =
+    orders?.filter((o) => o.status === OrderStatus.PENDING).length ?? 0;
+  const deliveredOrders =
+    orders?.filter((o) => o.status === OrderStatus.DELIVERED).length ?? 0;
 
   // ─── Render ─────────────────────────────────────────────────────────────────
   return (
@@ -214,7 +214,6 @@ export default function AdminDashboard() {
 
       <main className="pt-28 pb-24 px-4">
         <div className="max-w-7xl mx-auto">
-
           {/* ── Page Header ─────────────────────────────────────────────── */}
           <div className="mb-14">
             <div className="flex items-center gap-3 mb-2">
@@ -239,7 +238,8 @@ export default function AdminDashboard() {
                 Administrator Sign In Required
               </h2>
               <p className="font-sans font-light text-luxury-beige/45 text-sm leading-relaxed mb-10 max-w-sm mx-auto">
-                This dashboard is restricted to authorised Miss Luxe administrators. Please sign in to continue.
+                This dashboard is restricted to authorised Miss Luxe
+                administrators. Please sign in to continue.
               </p>
               <button
                 type="button"
@@ -282,7 +282,8 @@ export default function AdminDashboard() {
                 Access Denied
               </h2>
               <p className="font-sans font-light text-luxury-beige/45 text-sm leading-relaxed max-w-sm mx-auto">
-                Your account does not have administrator privileges. Please contact Miss Luxe support if you believe this is an error.
+                Your account does not have administrator privileges. Please
+                contact Miss Luxe support if you believe this is an error.
               </p>
               <a
                 href="/"
@@ -296,7 +297,6 @@ export default function AdminDashboard() {
           {/* ── Admin Dashboard ──────────────────────────────────────────── */}
           {isAuthenticated && !isAdminLoading && isAdmin === true && (
             <div className="space-y-10">
-
               {/* Stats */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <StatCard
@@ -339,7 +339,7 @@ export default function AdminDashboard() {
                     className="flex items-center gap-2 font-sans text-[10px] uppercase tracking-widest text-luxury-gold/50 hover:text-luxury-gold border border-luxury-gold/15 hover:border-luxury-gold/40 px-3 py-1.5 transition-all disabled:opacity-40"
                   >
                     <RefreshCw
-                      className={`w-3 h-3 ${isRefetching ? 'animate-spin' : ''}`}
+                      className={`w-3 h-3 ${isRefetching ? "animate-spin" : ""}`}
                     />
                     Refresh
                   </button>
@@ -374,20 +374,26 @@ export default function AdminDashboard() {
                     <table className="w-full min-w-[700px]">
                       <thead>
                         <tr className="border-b border-luxury-gold/10 bg-[oklch(0.09_0.004_60)]">
-                          {['Order ID', 'Item', 'Qty', 'Date', 'Customer', 'Status', 'Action'].map(
-                            col => (
-                              <th
-                                key={col}
-                                className="px-5 py-3 text-left font-sans text-[9px] uppercase tracking-[0.3em] text-luxury-beige/30"
-                              >
-                                {col}
-                              </th>
-                            )
-                          )}
+                          {[
+                            "Order ID",
+                            "Item",
+                            "Qty",
+                            "Date",
+                            "Customer",
+                            "Status",
+                            "Action",
+                          ].map((col) => (
+                            <th
+                              key={col}
+                              className="px-5 py-3 text-left font-sans text-[9px] uppercase tracking-[0.3em] text-luxury-beige/30"
+                            >
+                              {col}
+                            </th>
+                          ))}
                         </tr>
                       </thead>
                       <tbody>
-                        {orders.map(order => (
+                        {orders.map((order) => (
                           <OrderRow
                             key={String(order.id)}
                             order={order}

@@ -1,12 +1,36 @@
-import { SiInstagram } from 'react-icons/si';
+import { SiInstagram } from "react-icons/si";
 
 const instagramPreviews = [
-  { id: 1, image: '/assets/generated/product-box-signature.dim_800x800.jpg', alt: 'Signature Luxe Box' },
-  { id: 2, image: '/assets/generated/flavour-pistachio.dim_600x600.jpg', alt: 'Royal Pistachio Cream' },
-  { id: 3, image: '/assets/generated/product-box-grand.dim_800x800.jpg', alt: 'Grand Luxe Box' },
-  { id: 4, image: '/assets/generated/flavour-saffron-caramel.dim_600x600.jpg', alt: 'Saffron Caramel' },
-  { id: 5, image: '/assets/generated/product-box-royal.dim_800x800.jpg', alt: 'Royal Collector Box' },
-  { id: 6, image: '/assets/generated/flavour-assorted.dim_600x600.jpg', alt: 'Assorted Collection' },
+  {
+    id: 1,
+    image: "/assets/generated/product-box-signature.dim_800x800.jpg",
+    alt: "Signature Luxe Box",
+  },
+  {
+    id: 2,
+    image: "/assets/generated/flavour-pistachio.dim_600x600.jpg",
+    alt: "Royal Pistachio Cream",
+  },
+  {
+    id: 3,
+    image: "/assets/generated/product-box-grand.dim_800x800.jpg",
+    alt: "Grand Luxe Box",
+  },
+  {
+    id: 4,
+    image: "/assets/generated/flavour-saffron-caramel.dim_600x600.jpg",
+    alt: "Saffron Caramel",
+  },
+  {
+    id: 5,
+    image: "/assets/generated/product-box-royal.dim_800x800.jpg",
+    alt: "Royal Collector Box",
+  },
+  {
+    id: 6,
+    image: "/assets/generated/flavour-assorted.dim_600x600.jpg",
+    alt: "Assorted Collection",
+  },
 ];
 
 export default function InstagramSection() {
@@ -32,13 +56,14 @@ export default function InstagramSection() {
           </a>
           <div className="w-16 h-px bg-luxury-gold mx-auto mt-6 mb-4" />
           <p className="font-sans text-luxury-beige/80 text-sm font-light">
-            Discover our artisan creations, behind-the-scenes moments &amp; gifting inspiration
+            Discover our artisan creations, behind-the-scenes moments &amp;
+            gifting inspiration
           </p>
         </div>
 
         {/* Grid Preview */}
         <div className="grid grid-cols-3 md:grid-cols-6 gap-1 mb-10">
-          {instagramPreviews.map(item => (
+          {instagramPreviews.map((item) => (
             <a
               key={item.id}
               href="https://instagram.com/miss.luxeco"
@@ -56,7 +81,7 @@ export default function InstagramSection() {
                 decoding="async"
                 onError={(e) => {
                   const img = e.currentTarget;
-                  img.style.display = 'none';
+                  img.style.display = "none";
                 }}
               />
               {/* Hover overlay */}

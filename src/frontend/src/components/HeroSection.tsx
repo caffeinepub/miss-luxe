@@ -1,15 +1,15 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef } from "react";
 
 const IMG_FALLBACK_HANDLER = (e: React.SyntheticEvent<HTMLImageElement>) => {
   const img = e.currentTarget;
-  img.style.display = 'none';
+  img.style.display = "none";
   const parent = img.parentElement;
-  if (parent && !parent.querySelector('.img-fallback')) {
-    const fallback = document.createElement('div');
+  if (parent && !parent.querySelector(".img-fallback")) {
+    const fallback = document.createElement("div");
     fallback.className =
-      'img-fallback w-full h-full bg-gradient-to-br from-zinc-900 via-black to-amber-950';
-    fallback.style.position = 'absolute';
-    fallback.style.inset = '0';
+      "img-fallback w-full h-full bg-gradient-to-br from-zinc-900 via-black to-amber-950";
+    fallback.style.position = "absolute";
+    fallback.style.inset = "0";
     parent.appendChild(fallback);
   }
 };
@@ -24,18 +24,18 @@ export default function HeroSection() {
         heroRef.current.style.transform = `translateY(${scrollY * 0.3}px)`;
       }
     };
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const scrollToProducts = () => {
-    const el = document.getElementById('products');
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
+    const el = document.getElementById("products");
+    if (el) el.scrollIntoView({ behavior: "smooth" });
   };
 
-  const scrollToContact = () => {
-    const el = document.getElementById('contact');
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
+  const _scrollToContact = () => {
+    const el = document.getElementById("contact");
+    if (el) el.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
@@ -117,9 +117,9 @@ export default function HeroSection() {
         {/* Product tier strip */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6">
           {[
-            { label: '6 Pieces', price: '₹399' },
-            { label: '12 Pieces', price: '₹699' },
-            { label: '18 Pieces', price: '₹1,199' },
+            { label: "6 Pieces", price: "₹399" },
+            { label: "12 Pieces", price: "₹699" },
+            { label: "18 Pieces", price: "₹1,199" },
           ].map((tier, i) => (
             <div key={tier.label} className="flex items-center gap-3 sm:gap-6">
               <div className="flex items-center gap-2">
@@ -128,22 +128,28 @@ export default function HeroSection() {
                   {tier.label} — {tier.price}
                 </span>
               </div>
-              {i < 2 && <div className="hidden sm:block w-px h-4 bg-luxury-gold/30" />}
+              {i < 2 && (
+                <div className="hidden sm:block w-px h-4 bg-luxury-gold/30" />
+              )}
             </div>
           ))}
         </div>
       </div>
 
       {/* Gold shimmer strip at bottom */}
-      <div className="absolute bottom-0 left-0 right-0 h-1 z-[3]"
+      <div
+        className="absolute bottom-0 left-0 right-0 h-1 z-[3]"
         style={{
-          background: 'linear-gradient(90deg, transparent 0%, oklch(0.78 0.12 80 / 0.6) 30%, oklch(0.78 0.12 80 / 0.9) 50%, oklch(0.78 0.12 80 / 0.6) 70%, transparent 100%)',
+          background:
+            "linear-gradient(90deg, transparent 0%, oklch(0.78 0.12 80 / 0.6) 30%, oklch(0.78 0.12 80 / 0.9) 50%, oklch(0.78 0.12 80 / 0.6) 70%, transparent 100%)",
         }}
       />
 
       {/* Scroll Indicator */}
       <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-luxury-gold/50 z-[3]">
-        <span className="font-sans text-[10px] tracking-[0.5em] uppercase">Scroll</span>
+        <span className="font-sans text-[10px] tracking-[0.5em] uppercase">
+          Scroll
+        </span>
         <div className="w-px h-8 bg-luxury-gold/40 animate-pulse" />
       </div>
     </section>

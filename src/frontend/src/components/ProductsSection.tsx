@@ -1,36 +1,41 @@
-import { useState, useRef, useEffect } from 'react';
-import { Minus, Plus, Star, Check, ShoppingBag } from 'lucide-react';
-import { SiWhatsapp } from 'react-icons/si';
-import { useCart } from '../context/CartContext';
-import { products, Product } from '../data/products';
+import { Check, Minus, Plus, ShoppingBag, Star } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { SiWhatsapp } from "react-icons/si";
+import { useCart } from "../context/CartContext";
+import { type Product, products } from "../data/products";
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
-function generateWhatsAppOrderMessage(productName: string, qty: number, price: number): string {
+function generateWhatsAppOrderMessage(
+  productName: string,
+  qty: number,
+  price: number,
+): string {
   const total = price * qty;
   const lines = [
-    'Hello Miss Luxe! 🌹',
-    '',
-    '*New Order Request*',
-    '',
-    '*Products:*',
-    `- ${productName} x${qty} — ₹${total.toLocaleString('en-IN')}`,
-    '',
-    `*Order Total: ₹${total.toLocaleString('en-IN')}*`,
-    '*Payment: Prepaid*',
-    '',
-    'Please confirm availability and payment details. Thank you!',
+    "Hello Miss Luxe! 🌹",
+    "",
+    "*New Order Request*",
+    "",
+    "*Products:*",
+    `- ${productName} x${qty} — ₹${total.toLocaleString("en-IN")}`,
+    "",
+    `*Order Total: ₹${total.toLocaleString("en-IN")}*`,
+    "*Payment: Prepaid*",
+    "",
+    "Please confirm availability and payment details. Thank you!",
   ];
-  return `https://wa.me/917045899262?text=${encodeURIComponent(lines.join('\n'))}`;
+  return `https://wa.me/917045899262?text=${encodeURIComponent(lines.join("\n"))}`;
 }
 
 function handleImgError(e: React.SyntheticEvent<HTMLImageElement>) {
-  e.currentTarget.style.display = 'none';
+  e.currentTarget.style.display = "none";
   const parent = e.currentTarget.parentElement;
-  if (parent && !parent.querySelector('.img-fallback')) {
-    const fallback = document.createElement('div');
-    fallback.className = 'img-fallback w-full h-full';
-    fallback.style.cssText = 'position:absolute;inset:0;background:linear-gradient(135deg,#1a1a1a 0%,#0a0a0a 50%,#1a1000 100%)';
+  if (parent && !parent.querySelector(".img-fallback")) {
+    const fallback = document.createElement("div");
+    fallback.className = "img-fallback w-full h-full";
+    fallback.style.cssText =
+      "position:absolute;inset:0;background:linear-gradient(135deg,#1a1a1a 0%,#0a0a0a 50%,#1a1000 100%)";
     parent.appendChild(fallback);
   }
 }
@@ -41,25 +46,44 @@ interface QuantityControlProps {
   value: number;
   onChange: (delta: number) => void;
   max?: number;
-  size?: 'sm' | 'md';
+  size?: "sm" | "md";
 }
 
-function QuantityControl({ value, onChange, max = 8, size = 'md' }: QuantityControlProps) {
-  const btnClass = size === 'sm'
-    ? 'w-7 h-7 border border-luxury-gold/30 text-luxury-beige/70 hover:border-luxury-gold hover:text-luxury-gold disabled:opacity-30 disabled:cursor-not-allowed transition-colors flex items-center justify-center'
-    : 'w-8 h-8 border border-luxury-gold/30 text-luxury-beige/70 hover:border-luxury-gold hover:text-luxury-gold disabled:opacity-30 disabled:cursor-not-allowed transition-colors flex items-center justify-center';
-  const iconClass = 'w-3 h-3';
-  const numClass = size === 'sm'
-    ? 'font-sans text-luxury-beige text-sm w-6 text-center font-medium'
-    : 'font-sans text-luxury-beige text-sm w-8 text-center font-medium';
+function QuantityControl({
+  value,
+  onChange,
+  max = 8,
+  size = "md",
+}: QuantityControlProps) {
+  const btnClass =
+    size === "sm"
+      ? "w-7 h-7 border border-luxury-gold/30 text-luxury-beige/70 hover:border-luxury-gold hover:text-luxury-gold disabled:opacity-30 disabled:cursor-not-allowed transition-colors flex items-center justify-center"
+      : "w-8 h-8 border border-luxury-gold/30 text-luxury-beige/70 hover:border-luxury-gold hover:text-luxury-gold disabled:opacity-30 disabled:cursor-not-allowed transition-colors flex items-center justify-center";
+  const iconClass = "w-3 h-3";
+  const numClass =
+    size === "sm"
+      ? "font-sans text-luxury-beige text-sm w-6 text-center font-medium"
+      : "font-sans text-luxury-beige text-sm w-8 text-center font-medium";
 
   return (
     <div className="flex items-center gap-2">
-      <button type="button" onClick={() => onChange(-1)} disabled={value <= 1} className={btnClass} aria-label="Decrease quantity">
+      <button
+        type="button"
+        onClick={() => onChange(-1)}
+        disabled={value <= 1}
+        className={btnClass}
+        aria-label="Decrease quantity"
+      >
         <Minus className={iconClass} />
       </button>
       <span className={numClass}>{value}</span>
-      <button type="button" onClick={() => onChange(1)} disabled={value >= max} className={btnClass} aria-label="Increase quantity">
+      <button
+        type="button"
+        onClick={() => onChange(1)}
+        disabled={value >= max}
+        className={btnClass}
+        aria-label="Increase quantity"
+      >
         <Plus className={iconClass} />
       </button>
     </div>
@@ -78,14 +102,20 @@ function FlavourChip({ label }: { label: string }) {
 
 // ─── ScrollReveal wrapper ─────────────────────────────────────────────────────
 
-function Reveal({ children, delay = 0, className = '' }: { children: React.ReactNode; delay?: number; className?: string }) {
+function Reveal({
+  children,
+  delay = 0,
+  className = "",
+}: { children: React.ReactNode; delay?: number; className?: string }) {
   const [visible, setVisible] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setVisible(true); },
-      { threshold: 0.1 }
+      ([entry]) => {
+        if (entry.isIntersecting) setVisible(true);
+      },
+      { threshold: 0.1 },
     );
     if (ref.current) observer.observe(ref.current);
     return () => observer.disconnect();
@@ -97,7 +127,7 @@ function Reveal({ children, delay = 0, className = '' }: { children: React.React
       className={className}
       style={{
         opacity: visible ? 1 : 0,
-        transform: visible ? 'translateY(0)' : 'translateY(24px)',
+        transform: visible ? "translateY(0)" : "translateY(24px)",
         transition: `opacity 0.7s ease ${delay}s, transform 0.7s ease ${delay}s`,
       }}
     >
@@ -116,7 +146,13 @@ interface HeroProductProps {
   added: boolean;
 }
 
-function HeroProduct({ product, qty, onQtyChange, onAddToCart, added }: HeroProductProps) {
+function HeroProduct({
+  product,
+  qty,
+  onQtyChange,
+  onAddToCart,
+  added,
+}: HeroProductProps) {
   const [imgLoaded, setImgLoaded] = useState(false);
   const total = product.price * qty;
 
@@ -157,7 +193,10 @@ function HeroProduct({ product, qty, onQtyChange, onAddToCart, added }: HeroProd
 
             {/* View details hover */}
             <div className="absolute inset-0 z-[3] flex items-end justify-center pb-8 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-              <a href={`/product/${product.id}`} className="btn-gold px-8 py-3 text-xs tracking-[0.25em]">
+              <a
+                href={`/product/${product.id}`}
+                className="btn-gold px-8 py-3 text-xs tracking-[0.25em]"
+              >
                 View Full Details
               </a>
             </div>
@@ -173,7 +212,9 @@ function HeroProduct({ product, qty, onQtyChange, onAddToCart, added }: HeroProd
               {product.name}
             </h3>
 
-            <p className="font-serif text-luxury-beige/60 text-base italic mb-1">{product.subtitle}</p>
+            <p className="font-serif text-luxury-beige/60 text-base italic mb-1">
+              {product.subtitle}
+            </p>
 
             <div className="flex items-center gap-3 mb-5">
               <div className="w-10 h-px bg-luxury-gold/60" />
@@ -184,7 +225,7 @@ function HeroProduct({ product, qty, onQtyChange, onAddToCart, added }: HeroProd
             {/* Price */}
             <div className="mb-1">
               <span className="font-display text-5xl text-luxury-gold font-bold">
-                ₹{product.price.toLocaleString('en-IN')}
+                ₹{product.price.toLocaleString("en-IN")}
               </span>
             </div>
             <p className="font-sans text-luxury-beige/40 text-[11px] tracking-[0.35em] uppercase mb-5">
@@ -202,19 +243,23 @@ function HeroProduct({ product, qty, onQtyChange, onAddToCart, added }: HeroProd
                 Flavours Included
               </p>
               <div className="flex flex-wrap gap-2">
-                {product.flavours.map(f => <FlavourChip key={f} label={f} />)}
+                {product.flavours.map((f) => (
+                  <FlavourChip key={f} label={f} />
+                ))}
               </div>
             </div>
 
             {/* Qty + Total */}
             <div className="flex flex-wrap items-center gap-4 mb-5">
               <div className="flex items-center gap-3">
-                <span className="font-sans text-luxury-beige/40 text-xs uppercase tracking-widest">Qty</span>
+                <span className="font-sans text-luxury-beige/40 text-xs uppercase tracking-widest">
+                  Qty
+                </span>
                 <QuantityControl value={qty} onChange={onQtyChange} />
               </div>
               {qty > 1 && (
                 <span className="font-sans text-luxury-gold text-sm font-medium">
-                  Total: ₹{total.toLocaleString('en-IN')}
+                  Total: ₹{total.toLocaleString("en-IN")}
                 </span>
               )}
             </div>
@@ -227,19 +272,33 @@ function HeroProduct({ product, qty, onQtyChange, onAddToCart, added }: HeroProd
                 className="btn-gold flex items-center justify-center gap-2.5 px-8 py-4 text-xs tracking-[0.25em] flex-1"
               >
                 {added ? (
-                  <><Check className="w-4 h-4" /> Added to Cart</>
+                  <>
+                    <Check className="w-4 h-4" /> Added to Cart
+                  </>
                 ) : (
-                  <><ShoppingBag className="w-4 h-4" /> Add to Cart</>
+                  <>
+                    <ShoppingBag className="w-4 h-4" /> Add to Cart
+                  </>
                 )}
               </button>
               <a
-                href={generateWhatsAppOrderMessage(product.name, qty, product.price)}
+                href={generateWhatsAppOrderMessage(
+                  product.name,
+                  qty,
+                  product.price,
+                )}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-center gap-2.5 py-4 px-8 text-xs font-semibold tracking-[0.25em] uppercase transition-all duration-300 flex-1 text-white"
-                style={{ backgroundColor: 'oklch(0.52 0.17 145)' }}
-                onMouseEnter={e => { (e.currentTarget as HTMLElement).style.backgroundColor = 'oklch(0.45 0.17 145)'; }}
-                onMouseLeave={e => { (e.currentTarget as HTMLElement).style.backgroundColor = 'oklch(0.52 0.17 145)'; }}
+                style={{ backgroundColor: "oklch(0.52 0.17 145)" }}
+                onMouseEnter={(e) => {
+                  (e.currentTarget as HTMLElement).style.backgroundColor =
+                    "oklch(0.45 0.17 145)";
+                }}
+                onMouseLeave={(e) => {
+                  (e.currentTarget as HTMLElement).style.backgroundColor =
+                    "oklch(0.52 0.17 145)";
+                }}
               >
                 <SiWhatsapp className="w-4 h-4" />
                 Order on WhatsApp
@@ -263,12 +322,22 @@ interface SecondaryProductCardProps {
   index: number;
 }
 
-function SecondaryProductCard({ product, qty, onQtyChange, onAddToCart, added, index }: SecondaryProductCardProps) {
+function SecondaryProductCard({
+  product,
+  qty,
+  onQtyChange,
+  onAddToCart,
+  added,
+  index,
+}: SecondaryProductCardProps) {
   const [imgLoaded, setImgLoaded] = useState(false);
   const total = product.price * qty;
 
   return (
-    <Reveal delay={index * 0.15} className="group relative bg-luxury-black border border-luxury-gold/10 hover:border-luxury-gold/35 transition-all duration-500 flex flex-col">
+    <Reveal
+      delay={index * 0.15}
+      className="group relative bg-luxury-black border border-luxury-gold/10 hover:border-luxury-gold/35 transition-all duration-500 flex flex-col"
+    >
       {/* Image */}
       <div className="relative overflow-hidden aspect-[4/3] bg-gradient-to-br from-zinc-900 via-black to-amber-950/40">
         {!imgLoaded && (
@@ -298,7 +367,10 @@ function SecondaryProductCard({ product, qty, onQtyChange, onAddToCart, added, i
 
         {/* Hover overlay */}
         <div className="absolute inset-0 z-[2] flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-400 bg-luxury-black/40">
-          <a href={`/product/${product.id}`} className="btn-gold px-6 py-2.5 text-xs tracking-[0.25em]">
+          <a
+            href={`/product/${product.id}`}
+            className="btn-gold px-6 py-2.5 text-xs tracking-[0.25em]"
+          >
             View Details
           </a>
         </div>
@@ -315,16 +387,22 @@ function SecondaryProductCard({ product, qty, onQtyChange, onAddToCart, added, i
 
         {/* Name */}
         <div>
-          <h3 className="font-display text-2xl text-luxury-beige leading-snug mb-1">{product.name}</h3>
-          <p className="font-serif text-luxury-beige/50 text-sm italic">{product.subtitle}</p>
+          <h3 className="font-display text-2xl text-luxury-beige leading-snug mb-1">
+            {product.name}
+          </h3>
+          <p className="font-serif text-luxury-beige/50 text-sm italic">
+            {product.subtitle}
+          </p>
         </div>
 
         {/* Price */}
         <div>
           <span className="font-display text-4xl text-luxury-gold font-bold">
-            ₹{product.price.toLocaleString('en-IN')}
+            ₹{product.price.toLocaleString("en-IN")}
           </span>
-          <p className="font-sans text-luxury-beige/40 text-xs mt-1 tracking-wide">{product.netWeight}</p>
+          <p className="font-sans text-luxury-beige/40 text-xs mt-1 tracking-wide">
+            {product.netWeight}
+          </p>
         </div>
 
         {/* Description */}
@@ -334,9 +412,13 @@ function SecondaryProductCard({ product, qty, onQtyChange, onAddToCart, added, i
 
         {/* Flavour chips */}
         <div>
-          <p className="font-sans text-luxury-gold/50 text-[9px] tracking-[0.4em] uppercase mb-2">Flavours</p>
+          <p className="font-sans text-luxury-gold/50 text-[9px] tracking-[0.4em] uppercase mb-2">
+            Flavours
+          </p>
           <div className="flex flex-wrap gap-1.5">
-            {product.flavours.slice(0, 4).map(f => <FlavourChip key={f} label={f} />)}
+            {product.flavours.slice(0, 4).map((f) => (
+              <FlavourChip key={f} label={f} />
+            ))}
             {product.flavours.length > 4 && (
               <span className="font-sans text-[10px] text-luxury-beige/40 px-2 py-1">
                 +{product.flavours.length - 4} more
@@ -347,11 +429,13 @@ function SecondaryProductCard({ product, qty, onQtyChange, onAddToCart, added, i
 
         {/* Qty selector */}
         <div className="flex items-center gap-3 pt-1">
-          <span className="font-sans text-luxury-beige/40 text-xs uppercase tracking-widest">Qty</span>
+          <span className="font-sans text-luxury-beige/40 text-xs uppercase tracking-widest">
+            Qty
+          </span>
           <QuantityControl value={qty} onChange={onQtyChange} size="sm" />
           {qty > 1 && (
             <span className="font-sans text-luxury-gold text-sm font-medium ml-1">
-              ₹{total.toLocaleString('en-IN')}
+              ₹{total.toLocaleString("en-IN")}
             </span>
           )}
         </div>
@@ -364,19 +448,33 @@ function SecondaryProductCard({ product, qty, onQtyChange, onAddToCart, added, i
             className="btn-gold flex items-center justify-center gap-1.5 px-4 py-3 text-xs tracking-[0.2em] flex-1"
           >
             {added ? (
-              <><Check className="w-3.5 h-3.5" /> Added</>
+              <>
+                <Check className="w-3.5 h-3.5" /> Added
+              </>
             ) : (
-              <><ShoppingBag className="w-3.5 h-3.5" /> Add to Cart</>
+              <>
+                <ShoppingBag className="w-3.5 h-3.5" /> Add to Cart
+              </>
             )}
           </button>
           <a
-            href={generateWhatsAppOrderMessage(product.name, qty, product.price)}
+            href={generateWhatsAppOrderMessage(
+              product.name,
+              qty,
+              product.price,
+            )}
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center justify-center gap-1.5 py-3 px-4 text-xs font-semibold tracking-[0.2em] uppercase transition-all duration-300 flex-1 text-white"
-            style={{ backgroundColor: 'oklch(0.52 0.17 145)' }}
-            onMouseEnter={e => { (e.currentTarget as HTMLElement).style.backgroundColor = 'oklch(0.45 0.17 145)'; }}
-            onMouseLeave={e => { (e.currentTarget as HTMLElement).style.backgroundColor = 'oklch(0.52 0.17 145)'; }}
+            style={{ backgroundColor: "oklch(0.52 0.17 145)" }}
+            onMouseEnter={(e) => {
+              (e.currentTarget as HTMLElement).style.backgroundColor =
+                "oklch(0.45 0.17 145)";
+            }}
+            onMouseLeave={(e) => {
+              (e.currentTarget as HTMLElement).style.backgroundColor =
+                "oklch(0.52 0.17 145)";
+            }}
           >
             <SiWhatsapp className="w-3.5 h-3.5" />
             WhatsApp
@@ -392,28 +490,33 @@ function SecondaryProductCard({ product, qty, onQtyChange, onAddToCart, added, i
 export default function ProductsSection() {
   const { addItem } = useCart();
   const [quantities, setQuantities] = useState<Record<string, number>>(() =>
-    Object.fromEntries(products.map(p => [p.id, 1]))
+    Object.fromEntries(products.map((p) => [p.id, 1])),
   );
   const [addedIds, setAddedIds] = useState<Set<string>>(new Set());
 
   const changeQty = (id: string, delta: number) => {
-    setQuantities(prev => ({
+    setQuantities((prev) => ({
       ...prev,
       [id]: Math.max(1, Math.min(8, (prev[id] ?? 1) + delta)),
     }));
   };
 
   const handleAddToCart = (productId: string) => {
-    const product = products.find(p => p.id === productId);
+    const product = products.find((p) => p.id === productId);
     if (!product) return;
     const qty = quantities[productId] ?? 1;
     addItem(
-      { id: product.id, name: product.name, price: product.price, image: product.image },
-      qty
+      {
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        image: product.image,
+      },
+      qty,
     );
-    setAddedIds(prev => new Set(prev).add(productId));
+    setAddedIds((prev) => new Set(prev).add(productId));
     setTimeout(() => {
-      setAddedIds(prev => {
+      setAddedIds((prev) => {
         const next = new Set(prev);
         next.delete(productId);
         return next;
@@ -427,7 +530,6 @@ export default function ProductsSection() {
   return (
     <section id="products" className="py-20 md:py-32 bg-luxury-black">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-
         {/* Section Header */}
         <Reveal className="text-center mb-16">
           <p className="font-sans text-luxury-gold text-[11px] tracking-[0.6em] uppercase mb-4 opacity-80">
@@ -451,7 +553,7 @@ export default function ProductsSection() {
           <HeroProduct
             product={heroProduct}
             qty={quantities[heroProduct.id] ?? 1}
-            onQtyChange={d => changeQty(heroProduct.id, d)}
+            onQtyChange={(d) => changeQty(heroProduct.id, d)}
             onAddToCart={() => handleAddToCart(heroProduct.id)}
             added={addedIds.has(heroProduct.id)}
           />
@@ -474,7 +576,7 @@ export default function ProductsSection() {
               key={product.id}
               product={product}
               qty={quantities[product.id] ?? 1}
-              onQtyChange={d => changeQty(product.id, d)}
+              onQtyChange={(d) => changeQty(product.id, d)}
               onAddToCart={() => handleAddToCart(product.id)}
               added={addedIds.has(product.id)}
               index={i}

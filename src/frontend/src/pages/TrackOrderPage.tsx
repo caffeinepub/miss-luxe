@@ -1,21 +1,29 @@
-import { useState } from 'react';
-import { Package, CheckCircle, Truck, MapPin, LogIn, Loader2, RefreshCw } from 'lucide-react';
-import Navigation from '../components/Navigation';
-import Footer from '../components/Footer';
-import CartDrawer from '../components/CartDrawer';
-import FloatingWhatsAppButton from '../components/FloatingWhatsAppButton';
-import { useInternetIdentity } from '../hooks/useInternetIdentity';
-import { useGetMyOrders } from '../hooks/useQueries';
-import { OrderStatus } from '../backend';
+import {
+  CheckCircle,
+  Loader2,
+  LogIn,
+  MapPin,
+  Package,
+  RefreshCw,
+  Truck,
+} from "lucide-react";
+import { useState } from "react";
+import { OrderStatus } from "../backend";
+import CartDrawer from "../components/CartDrawer";
+import FloatingWhatsAppButton from "../components/FloatingWhatsAppButton";
+import Footer from "../components/Footer";
+import Navigation from "../components/Navigation";
+import { useInternetIdentity } from "../hooks/useInternetIdentity";
+import { useGetMyOrders } from "../hooks/useQueries";
 
 // Maps backend status to display steps
 // Backend: PENDING | DELIVERED
 // Display: Confirmed → Packed → Dispatched → Delivered
 const STEPS = [
-  { key: 'confirmed', label: 'Confirmed', icon: CheckCircle },
-  { key: 'packed', label: 'Packed', icon: Package },
-  { key: 'dispatched', label: 'Dispatched', icon: Truck },
-  { key: 'delivered', label: 'Delivered', icon: MapPin },
+  { key: "confirmed", label: "Confirmed", icon: CheckCircle },
+  { key: "packed", label: "Packed", icon: Package },
+  { key: "dispatched", label: "Dispatched", icon: Truck },
+  { key: "delivered", label: "Delivered", icon: MapPin },
 ] as const;
 
 function getActiveStepIndex(status: OrderStatus): number {
@@ -27,11 +35,11 @@ function getActiveStepIndex(status: OrderStatus): number {
 function formatDate(nanoseconds: bigint): string {
   const ms = Number(nanoseconds) / 1_000_000;
   const date = new Date(ms);
-  if (isNaN(date.getTime())) return 'N/A';
-  return date.toLocaleDateString('en-IN', {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
+  if (Number.isNaN(date.getTime())) return "N/A";
+  return date.toLocaleDateString("en-IN", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
   });
 }
 
@@ -54,16 +62,16 @@ function StatusTracker({ status }: { status: OrderStatus }) {
                 className={`w-9 h-9 rounded-full flex items-center justify-center border-2 transition-all duration-300 shrink-0 ${
                   isActive
                     ? isCurrent
-                      ? 'bg-luxury-gold border-luxury-gold text-luxury-black shadow-gold'
-                      : 'bg-luxury-gold/20 border-luxury-gold text-luxury-gold'
-                    : 'bg-luxury-black border-luxury-gold/20 text-luxury-beige/20'
+                      ? "bg-luxury-gold border-luxury-gold text-luxury-black shadow-gold"
+                      : "bg-luxury-gold/20 border-luxury-gold text-luxury-gold"
+                    : "bg-luxury-black border-luxury-gold/20 text-luxury-beige/20"
                 }`}
               >
                 <Icon size={16} />
               </div>
               <span
                 className={`font-sans text-[10px] uppercase tracking-widest whitespace-nowrap ${
-                  isActive ? 'text-luxury-gold' : 'text-luxury-beige/25'
+                  isActive ? "text-luxury-gold" : "text-luxury-beige/25"
                 }`}
               >
                 {step.label}
@@ -73,7 +81,7 @@ function StatusTracker({ status }: { status: OrderStatus }) {
             {!isLast && (
               <div
                 className={`flex-1 h-px mx-2 transition-all duration-300 ${
-                  idx < activeIdx ? 'bg-luxury-gold' : 'bg-luxury-gold/15'
+                  idx < activeIdx ? "bg-luxury-gold" : "bg-luxury-gold/15"
                 }`}
               />
             )}
@@ -86,7 +94,8 @@ function StatusTracker({ status }: { status: OrderStatus }) {
 
 export default function TrackOrderPage() {
   const [cartOpen, setCartOpen] = useState(false);
-  const { identity, login, isLoggingIn, isInitializing } = useInternetIdentity();
+  const { identity, login, isLoggingIn, isInitializing } =
+    useInternetIdentity();
   const isAuthenticated = !!identity;
 
   const { data: orders, isLoading, refetch, isRefetching } = useGetMyOrders();
@@ -119,7 +128,8 @@ export default function TrackOrderPage() {
                 Sign In to Track Your Orders
               </h2>
               <p className="font-sans font-light text-luxury-beige/50 text-sm leading-relaxed mb-10 max-w-sm mx-auto">
-                Please sign in with your Internet Identity to view the status of your prepaid orders.
+                Please sign in with your Internet Identity to view the status of
+                your prepaid orders.
               </p>
               <button
                 type="button"
@@ -140,7 +150,8 @@ export default function TrackOrderPage() {
                 )}
               </button>
               <p className="font-sans text-luxury-beige/25 text-xs mt-6 max-w-xs mx-auto">
-                Secure authentication via Internet Identity — your data stays private.
+                Secure authentication via Internet Identity — your data stays
+                private.
               </p>
             </div>
           )}
@@ -156,7 +167,9 @@ export default function TrackOrderPage() {
                   disabled={isRefetching}
                   className="flex items-center gap-2 font-sans text-xs uppercase tracking-widest text-luxury-gold/60 hover:text-luxury-gold border border-luxury-gold/20 hover:border-luxury-gold/50 px-4 py-2 transition-all disabled:opacity-40"
                 >
-                  <RefreshCw className={`w-3 h-3 ${isRefetching ? 'animate-spin' : ''}`} />
+                  <RefreshCw
+                    className={`w-3 h-3 ${isRefetching ? "animate-spin" : ""}`}
+                  />
                   Refresh
                 </button>
               </div>
@@ -165,7 +178,9 @@ export default function TrackOrderPage() {
               {isLoading && (
                 <div className="text-center py-20">
                   <Loader2 className="w-8 h-8 text-luxury-gold/50 animate-spin mx-auto mb-6" />
-                  <p className="font-sans text-luxury-beige/50 text-sm">Fetching your orders...</p>
+                  <p className="font-sans text-luxury-beige/50 text-sm">
+                    Fetching your orders...
+                  </p>
                 </div>
               )}
 
@@ -173,10 +188,12 @@ export default function TrackOrderPage() {
               {!isLoading && (!orders || orders.length === 0) && (
                 <div className="text-center py-20 border border-luxury-gold/10 bg-[oklch(0.10_0_0)]">
                   <Package className="w-14 h-14 text-luxury-gold/20 mx-auto mb-6" />
-                  <h3 className="font-serif text-xl text-luxury-beige mb-3">No Orders Found</h3>
+                  <h3 className="font-serif text-xl text-luxury-beige mb-3">
+                    No Orders Found
+                  </h3>
                   <p className="font-sans font-light text-luxury-beige/45 text-sm leading-relaxed max-w-sm mx-auto mb-8">
-                    You have no orders yet. Place your first order to experience the Miss Luxe
-                    difference.
+                    You have no orders yet. Place your first order to experience
+                    the Miss Luxe difference.
                   </p>
                   <a
                     href="/#products"
@@ -190,7 +207,7 @@ export default function TrackOrderPage() {
               {/* Orders list */}
               {!isLoading && orders && orders.length > 0 && (
                 <div className="space-y-6">
-                  {orders.map(order => (
+                  {orders.map((order) => (
                     <div
                       key={String(order.id)}
                       className="border border-luxury-gold/10 hover:border-luxury-gold/25 transition-all duration-300 bg-[oklch(0.10_0_0)]"
@@ -201,20 +218,24 @@ export default function TrackOrderPage() {
                           <p className="font-sans text-luxury-gold text-xs tracking-[0.3em] uppercase mb-1">
                             Order #{String(order.id)}
                           </p>
-                          <h3 className="font-serif text-luxury-beige text-xl">{order.itemName}</h3>
+                          <h3 className="font-serif text-luxury-beige text-xl">
+                            {order.itemName}
+                          </h3>
                           <p className="font-sans text-luxury-beige/40 text-xs mt-1">
-                            Placed on {formatDate(order.createdAt)} · Qty:{' '}
+                            Placed on {formatDate(order.createdAt)} · Qty:{" "}
                             {String(order.quantity)}
                           </p>
                         </div>
                         <span
                           className={`self-start sm:self-auto px-3 py-1 font-sans text-xs uppercase tracking-widest border ${
                             order.status === OrderStatus.DELIVERED
-                              ? 'border-luxury-gold bg-luxury-gold/10 text-luxury-gold'
-                              : 'border-luxury-gold/30 bg-luxury-gold/5 text-luxury-gold/70'
+                              ? "border-luxury-gold bg-luxury-gold/10 text-luxury-gold"
+                              : "border-luxury-gold/30 bg-luxury-gold/5 text-luxury-gold/70"
                           }`}
                         >
-                          {order.status === OrderStatus.DELIVERED ? 'Delivered' : 'In Progress'}
+                          {order.status === OrderStatus.DELIVERED
+                            ? "Delivered"
+                            : "In Progress"}
                         </span>
                       </div>
 
@@ -232,7 +253,7 @@ export default function TrackOrderPage() {
           {/* Help note */}
           <div className="mt-16 text-center">
             <p className="font-sans text-luxury-beige/30 text-xs leading-relaxed">
-              For order queries, reach us on{' '}
+              For order queries, reach us on{" "}
               <a
                 href="https://wa.me/917045899262"
                 target="_blank"
@@ -240,8 +261,8 @@ export default function TrackOrderPage() {
                 className="text-luxury-gold/60 hover:text-luxury-gold transition-colors"
               >
                 WhatsApp
-              </a>{' '}
-              or call{' '}
+              </a>{" "}
+              or call{" "}
               <a
                 href="tel:+917045899262"
                 className="text-luxury-gold/60 hover:text-luxury-gold transition-colors"

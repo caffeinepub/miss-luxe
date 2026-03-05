@@ -1,9 +1,18 @@
-import { useState, useEffect, useRef } from 'react';
-import { ShoppingBag, Menu, X, User, LogOut, Package, LogIn, LayoutDashboard } from 'lucide-react';
-import { SiInstagram } from 'react-icons/si';
-import { useCart } from '../context/CartContext';
-import { useInternetIdentity } from '../hooks/useInternetIdentity';
-import { useIsCallerAdmin } from '../hooks/useQueries';
+import {
+  LayoutDashboard,
+  LogIn,
+  LogOut,
+  Menu,
+  Package,
+  ShoppingBag,
+  User,
+  X,
+} from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { SiInstagram } from "react-icons/si";
+import { useCart } from "../context/CartContext";
+import { useInternetIdentity } from "../hooks/useInternetIdentity";
+import { useIsCallerAdmin } from "../hooks/useQueries";
 
 interface NavigationProps {
   onCartOpen: () => void;
@@ -14,59 +23,67 @@ export default function Navigation({ onCartOpen }: NavigationProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [accountOpen, setAccountOpen] = useState(false);
   const { totalItems } = useCart();
-  const { identity, login, clear, isLoggingIn, isInitializing } = useInternetIdentity();
+  const { identity, login, clear, isLoggingIn, isInitializing } =
+    useInternetIdentity();
   const isAuthenticated = !!identity;
   const dropdownRef = useRef<HTMLDivElement>(null);
   const { data: isAdmin } = useIsCallerAdmin();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   // Close dropdown on outside click
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(e.target as Node)
+      ) {
         setAccountOpen(false);
       }
     };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   const scrollToSection = (id: string) => {
     setMobileOpen(false);
-    if (window.location.pathname !== '/') {
+    if (window.location.pathname !== "/") {
       window.location.href = `/#${id}`;
       return;
     }
     const el = document.getElementById(id);
     if (el) {
-      el.scrollIntoView({ behavior: 'smooth' });
+      el.scrollIntoView({ behavior: "smooth" });
     }
   };
 
   const navLinks = [
-    { label: 'About', id: 'about' },
-    { label: 'Collection', id: 'products' },
-    { label: 'Gift Sets', id: 'gifts' },
-    { label: 'Contact', id: 'contact' },
+    { label: "About", id: "about" },
+    { label: "Collection", id: "products" },
+    { label: "Gift Sets", id: "gifts" },
+    { label: "Contact", id: "contact" },
   ];
 
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-30 transition-all duration-300 ${
         scrolled || mobileOpen
-          ? 'bg-luxury-black/95 backdrop-blur-md border-b border-luxury-gold/20'
-          : 'bg-transparent'
+          ? "bg-luxury-black/95 backdrop-blur-md border-b border-luxury-gold/20"
+          : "bg-transparent"
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
-          <a href="/" className="flex flex-col leading-none" aria-label="Miss Luxe Home">
+          <a
+            href="/"
+            className="flex flex-col leading-none"
+            aria-label="Miss Luxe Home"
+          >
             <span className="font-display text-luxury-gold text-xl md:text-2xl tracking-[0.2em] uppercase">
               Miss Luxe
             </span>
@@ -77,7 +94,7 @@ export default function Navigation({ onCartOpen }: NavigationProps) {
 
           {/* Desktop Nav */}
           <div className="hidden md:flex items-center gap-6 lg:gap-8">
-            {navLinks.map(link => (
+            {navLinks.map((link) => (
               <button
                 key={link.id}
                 type="button"
@@ -132,7 +149,7 @@ export default function Navigation({ onCartOpen }: NavigationProps) {
               <div ref={dropdownRef} className="relative hidden md:block">
                 <button
                   type="button"
-                  onClick={() => setAccountOpen(prev => !prev)}
+                  onClick={() => setAccountOpen((prev) => !prev)}
                   className="flex items-center gap-1.5 text-luxury-gold/70 hover:text-luxury-gold transition-colors p-1"
                   aria-label="Account menu"
                   aria-expanded={accountOpen}
@@ -180,7 +197,7 @@ export default function Navigation({ onCartOpen }: NavigationProps) {
               type="button"
               onClick={onCartOpen}
               className="relative text-luxury-beige/70 hover:text-luxury-gold transition-colors p-1"
-              aria-label={`Open cart${totalItems > 0 ? `, ${totalItems} items` : ''}`}
+              aria-label={`Open cart${totalItems > 0 ? `, ${totalItems} items` : ""}`}
             >
               <ShoppingBag className="w-5 h-5" />
               {totalItems > 0 && (
@@ -194,11 +211,15 @@ export default function Navigation({ onCartOpen }: NavigationProps) {
             <button
               type="button"
               className="md:hidden text-luxury-beige/70 hover:text-luxury-gold transition-colors p-1"
-              onClick={() => setMobileOpen(prev => !prev)}
-              aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
+              onClick={() => setMobileOpen((prev) => !prev)}
+              aria-label={mobileOpen ? "Close menu" : "Open menu"}
               aria-expanded={mobileOpen}
             >
-              {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              {mobileOpen ? (
+                <X className="w-5 h-5" />
+              ) : (
+                <Menu className="w-5 h-5" />
+              )}
             </button>
           </div>
         </div>
@@ -207,7 +228,7 @@ export default function Navigation({ onCartOpen }: NavigationProps) {
       {/* Mobile Menu */}
       {mobileOpen && (
         <div className="md:hidden bg-luxury-black/98 border-t border-luxury-gold/20 px-4 py-6 space-y-4">
-          {navLinks.map(link => (
+          {navLinks.map((link) => (
             <button
               key={link.id}
               type="button"

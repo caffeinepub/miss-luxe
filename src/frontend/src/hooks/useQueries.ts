@@ -1,12 +1,12 @@
-import { useQuery } from '@tanstack/react-query';
-import { useActor } from './useActor';
-import type { Order } from '../backend';
-import { useInternetIdentity } from './useInternetIdentity';
+import { useQuery } from "@tanstack/react-query";
+import type { Order } from "../backend";
+import { useActor } from "./useActor";
+import { useInternetIdentity } from "./useInternetIdentity";
 
 export function useGetMyOrders() {
   const { actor, isFetching } = useActor();
   return useQuery<Order[]>({
-    queryKey: ['myOrders'],
+    queryKey: ["myOrders"],
     queryFn: async () => {
       if (!actor) return [];
       return actor.getMyOrders();
@@ -20,7 +20,7 @@ export function useIsCallerAdmin() {
   const { identity } = useInternetIdentity();
   const isAuthenticated = !!identity;
   return useQuery<boolean>({
-    queryKey: ['isAdmin'],
+    queryKey: ["isAdmin"],
     queryFn: async () => {
       if (!actor) return false;
       return actor.isCallerAdmin();
@@ -34,7 +34,7 @@ export function useGetAllOrders() {
   const { identity } = useInternetIdentity();
   const isAuthenticated = !!identity;
   return useQuery<Order[]>({
-    queryKey: ['allOrders'],
+    queryKey: ["allOrders"],
     queryFn: async () => {
       if (!actor) return [];
       return actor.getAllOrders();

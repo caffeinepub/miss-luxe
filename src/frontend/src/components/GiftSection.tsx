@@ -1,4 +1,4 @@
-import { giftBundles } from '../data/giftBundles';
+import { giftBundles } from "../data/giftBundles";
 
 export default function GiftSection() {
   return (
@@ -14,7 +14,7 @@ export default function GiftSection() {
           decoding="async"
           onError={(e) => {
             const img = e.currentTarget;
-            img.style.display = 'none';
+            img.style.display = "none";
           }}
         />
         <div className="absolute inset-0 bg-gradient-to-r from-luxury-black/60 via-luxury-black/30 to-luxury-black/60 z-[2]" />
@@ -40,7 +40,7 @@ export default function GiftSection() {
       {/* Gift Bundles */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
-          {giftBundles.map(bundle => (
+          {giftBundles.map((bundle) => (
             <div
               key={bundle.id}
               className="group border border-luxury-gold/10 hover:border-luxury-gold/40 transition-all duration-500"
@@ -54,30 +54,31 @@ export default function GiftSection() {
                   decoding="async"
                   onError={(e) => {
                     const img = e.currentTarget;
-                    img.style.display = 'none';
+                    img.style.display = "none";
                     const parent = img.parentElement;
-                    if (parent && !parent.querySelector('.img-fallback')) {
-                      const fallback = document.createElement('div');
-                      fallback.className = 'img-fallback w-full h-full bg-gradient-to-br from-zinc-900 via-black to-amber-950/40';
-                      fallback.style.position = 'absolute';
-                      fallback.style.inset = '0';
+                    if (parent && !parent.querySelector(".img-fallback")) {
+                      const fallback = document.createElement("div");
+                      fallback.className =
+                        "img-fallback w-full h-full bg-gradient-to-br from-zinc-900 via-black to-amber-950/40";
+                      fallback.style.position = "absolute";
+                      fallback.style.inset = "0";
                       parent.appendChild(fallback);
                     }
                   }}
                 />
                 {/* Tier badge */}
                 <div className="absolute top-3 left-3">
-                  {bundle.tier === 'signature' && (
+                  {bundle.tier === "signature" && (
                     <span className="bg-luxury-gold text-luxury-black text-[10px] font-sans font-bold uppercase tracking-widest px-2.5 py-1">
                       Bestseller
                     </span>
                   )}
-                  {bundle.tier === 'grand' && (
+                  {bundle.tier === "grand" && (
                     <span className="bg-luxury-gold text-luxury-black text-[10px] font-sans font-bold uppercase tracking-widest px-2.5 py-1">
                       Gift Favourite
                     </span>
                   )}
-                  {bundle.tier === 'royal' && (
+                  {bundle.tier === "royal" && (
                     <span className="bg-luxury-gold text-luxury-black text-[10px] font-sans font-bold uppercase tracking-widest px-2.5 py-1">
                       Limited Edition
                     </span>
@@ -91,7 +92,9 @@ export default function GiftSection() {
                     {bundle.occasion}
                   </p>
                 )}
-                <h3 className="font-display text-xl text-luxury-beige mb-2">{bundle.name}</h3>
+                <h3 className="font-display text-xl text-luxury-beige mb-2">
+                  {bundle.name}
+                </h3>
                 <p className="font-sans text-luxury-beige/80 text-xs font-light mb-4 leading-relaxed">
                   {bundle.description}
                 </p>
@@ -110,7 +113,7 @@ export default function GiftSection() {
                 <div className="flex items-center justify-between">
                   <div>
                     <span className="font-display text-2xl text-luxury-gold font-bold">
-                      ₹{bundle.price.toLocaleString('en-IN')}
+                      ₹{bundle.price.toLocaleString("en-IN")}
                     </span>
                     <span className="font-sans text-luxury-beige/40 text-xs ml-2">
                       {bundle.pieces} pieces
@@ -134,21 +137,23 @@ export default function GiftSection() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 border-t border-luxury-gold/20 pt-16">
           {[
             {
-              title: 'Bespoke Packaging',
-              desc: 'Custom-designed boxes with your personal message and branding.',
+              title: "Bespoke Packaging",
+              desc: "Custom-designed boxes with your personal message and branding.",
             },
             {
-              title: 'Seasonal Collections',
-              desc: 'Special editions for Eid, Diwali, Christmas, and all major celebrations.',
+              title: "Seasonal Collections",
+              desc: "Special editions for Eid, Diwali, Christmas, and all major celebrations.",
             },
             {
-              title: 'Corporate Gifting',
-              desc: 'Bulk orders with branded packaging for your business needs.',
+              title: "Corporate Gifting",
+              desc: "Bulk orders with branded packaging for your business needs.",
             },
-          ].map(feature => (
+          ].map((feature) => (
             <div key={feature.title} className="text-center">
               <div className="w-8 h-px bg-luxury-gold mx-auto mb-4" />
-              <h4 className="font-serif text-luxury-beige text-lg mb-2">{feature.title}</h4>
+              <h4 className="font-serif text-luxury-beige text-lg mb-2">
+                {feature.title}
+              </h4>
               <p className="font-sans text-luxury-beige/75 text-sm font-light leading-relaxed">
                 {feature.desc}
               </p>
