@@ -128,11 +128,11 @@ export default function CartPage() {
       .filter((l): l is string => l !== null)
       .join("\n");
 
-    window.open(
-      `https://wa.me/917045899262?text=${encodeURIComponent(message)}`,
-      "_blank",
-      "noopener,noreferrer",
-    );
+    const link = document.createElement("a");
+    link.href = `https://wa.me/917045899262?text=${encodeURIComponent(message)}`;
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+    link.click();
   };
 
   return (

@@ -314,19 +314,11 @@ export default function Navigation({ onCartOpen }: NavigationProps) {
               Instagram
             </a>
             <a
-              href="https://wa.me/917045899262"
+              href={`https://wa.me/917045899262?text=${encodeURIComponent("Hello Miss Luxe! 🌹✨\n\nI'd like to place an order. Could you please help me?")}`}
               target="_blank"
               rel="noopener noreferrer"
               className="btn-gold block text-center py-3 text-sm"
-              onClick={(e) => {
-                e.preventDefault();
-                setMobileOpen(false);
-                window.open(
-                  "https://wa.me/917045899262",
-                  "_blank",
-                  "noopener,noreferrer",
-                );
-              }}
+              onClick={() => setMobileOpen(false)}
             >
               Order Now
             </a>

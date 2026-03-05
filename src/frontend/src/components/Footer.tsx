@@ -59,18 +59,10 @@ export default function Footer() {
             <ul className="space-y-4">
               <li>
                 <a
-                  href="https://wa.me/917045899262"
+                  href={`https://wa.me/917045899262?text=${encodeURIComponent("Hello Miss Luxe! 🌹\n\nI'd like to get in touch. Could you please help me?")}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-3 font-sans text-luxury-beige/50 text-sm hover:text-luxury-gold transition-colors"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    window.open(
-                      "https://wa.me/917045899262",
-                      "_blank",
-                      "noopener,noreferrer",
-                    );
-                  }}
                 >
                   <span className="w-4 h-4 flex items-center justify-center flex-shrink-0">
                     <SiWhatsapp size={16} />

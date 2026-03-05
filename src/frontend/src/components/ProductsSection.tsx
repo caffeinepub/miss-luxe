@@ -13,17 +13,20 @@ function generateWhatsAppOrderMessage(
 ): string {
   const total = price * qty;
   const lines = [
-    "Hello Miss Luxe! 🌹",
+    "Hello Miss Luxe! 🌹✨",
     "",
-    "*New Order Request*",
+    "I would like to place an order for your exquisite collection.",
     "",
-    "*Products:*",
-    `- ${productName} x${qty} — ₹${total.toLocaleString("en-IN")}`,
+    "*Order Details:*",
+    `◈ Product: ${productName}`,
+    `◈ Quantity: ${qty} box${qty > 1 ? "es" : ""}`,
+    `◈ Total: ₹${total.toLocaleString("en-IN")}`,
     "",
-    `*Order Total: ₹${total.toLocaleString("en-IN")}*`,
-    "*Payment: Prepaid*",
+    "*Payment Mode: Prepaid*",
     "",
-    "Please confirm availability and payment details. Thank you!",
+    "Kindly share your UPI details and confirm availability.",
+    "",
+    "Thank you! 🌸",
   ];
   return `https://wa.me/917045899262?text=${encodeURIComponent(lines.join("\n"))}`;
 }
@@ -291,18 +294,6 @@ function HeroProduct({
                 rel="noopener noreferrer"
                 className="flex items-center justify-center gap-2.5 py-4 px-8 text-xs font-semibold tracking-[0.25em] uppercase transition-all duration-300 flex-1 text-white"
                 style={{ backgroundColor: "oklch(0.52 0.17 145)" }}
-                onClick={(e) => {
-                  e.preventDefault();
-                  window.open(
-                    generateWhatsAppOrderMessage(
-                      product.name,
-                      qty,
-                      product.price,
-                    ),
-                    "_blank",
-                    "noopener,noreferrer",
-                  );
-                }}
                 onMouseEnter={(e) => {
                   (e.currentTarget as HTMLElement).style.backgroundColor =
                     "oklch(0.45 0.17 145)";
@@ -481,14 +472,6 @@ function SecondaryProductCard({
             rel="noopener noreferrer"
             className="flex items-center justify-center gap-1.5 py-3 px-4 text-xs font-semibold tracking-[0.2em] uppercase transition-all duration-300 flex-1 text-white"
             style={{ backgroundColor: "oklch(0.52 0.17 145)" }}
-            onClick={(e) => {
-              e.preventDefault();
-              window.open(
-                generateWhatsAppOrderMessage(product.name, qty, product.price),
-                "_blank",
-                "noopener,noreferrer",
-              );
-            }}
             onMouseEnter={(e) => {
               (e.currentTarget as HTMLElement).style.backgroundColor =
                 "oklch(0.45 0.17 145)";
@@ -614,18 +597,10 @@ export default function ProductsSection() {
             Looking for something bespoke?
           </p>
           <a
-            href="https://wa.me/917045899262"
+            href={`https://wa.me/917045899262?text=${encodeURIComponent("Hello Miss Luxe! 🌹✨\n\nI'm interested in ordering a *Custom Box* — a bespoke creation tailored to my preferences.\n\nCould you share more details on customisation options and pricing?\n\nThank you!")}`}
             target="_blank"
             rel="noopener noreferrer"
             className="btn-gold inline-block px-12 py-4 text-sm tracking-[0.25em]"
-            onClick={(e) => {
-              e.preventDefault();
-              window.open(
-                "https://wa.me/917045899262",
-                "_blank",
-                "noopener,noreferrer",
-              );
-            }}
           >
             Order a Custom Box
           </a>

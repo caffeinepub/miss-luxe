@@ -40,11 +40,12 @@ export default function ContactSection() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!validate()) return;
-    const text = `New inquiry from ${formData.name}\nEmail: ${formData.email}\nPhone: ${formData.phone || "Not provided"}\n\nMessage: ${formData.message}`;
-    window.open(
-      `https://wa.me/917045899262?text=${encodeURIComponent(text)}`,
-      "_blank",
-    );
+    const text = `Hello Miss Luxe! 🌹✨\n\n*New Inquiry*\n\n◈ Name: ${formData.name}\n◈ Email: ${formData.email}\n◈ Phone: ${formData.phone || "Not provided"}\n\n*Message:*\n${formData.message}\n\nThank you!`;
+    const link = document.createElement("a");
+    link.href = `https://wa.me/917045899262?text=${encodeURIComponent(text)}`;
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+    link.click();
     setSubmitted(true);
   };
 

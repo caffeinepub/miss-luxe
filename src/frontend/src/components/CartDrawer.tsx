@@ -43,11 +43,12 @@ export default function CartDrawer({ open, onClose }: CartDrawerProps) {
         return line;
       })
       .join("\n");
-    const message = `Hello Miss Luxe! I'd like to place an order:\n\n${orderText}\n\n*Total: ₹${totalPrice.toLocaleString()}*\n\n💳 Prepaid Order\nPlease share payment details to confirm. Thank you! 🖤✨`;
-    window.open(
-      `https://wa.me/917045899262?text=${encodeURIComponent(message)}`,
-      "_blank",
-    );
+    const message = `Hello Miss Luxe! 🌹✨\n\nI'd like to place an order:\n\n${orderText}\n\n*Total: ₹${totalPrice.toLocaleString()}*\n\n*Payment Mode: Prepaid*\nKindly share your UPI details to confirm. Thank you! 🌸`;
+    const link = document.createElement("a");
+    link.href = `https://wa.me/917045899262?text=${encodeURIComponent(message)}`;
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+    link.click();
   };
 
   return (

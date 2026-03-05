@@ -27,18 +27,10 @@ export default function GiftSection() {
           </h2>
           <div className="w-16 h-px bg-luxury-gold mx-auto mb-6" />
           <a
-            href="https://wa.me/917045899262?text=I'm%20interested%20in%20your%20gift%20collections"
+            href={`https://wa.me/917045899262?text=${encodeURIComponent("Hello Miss Luxe! 🌹✨\n\nI'm interested in your luxury gift collections. Could you share details on what's available?\n\nThank you!")}`}
             target="_blank"
             rel="noopener noreferrer"
             className="btn-gold px-10 py-3 text-sm tracking-widest"
-            onClick={(e) => {
-              e.preventDefault();
-              window.open(
-                "https://wa.me/917045899262?text=I'm%20interested%20in%20your%20gift%20collections",
-                "_blank",
-                "noopener,noreferrer",
-              );
-            }}
           >
             Shop Gift Sets
           </a>
@@ -128,18 +120,10 @@ export default function GiftSection() {
                     </span>
                   </div>
                   <a
-                    href={`https://wa.me/917045899262?text=${encodeURIComponent(`🌟 I'd like to order the ${bundle.name} (₹${bundle.price}) — ${bundle.pieces} pieces.\n\nPlease share payment and delivery details.\n\nThank you!`)}`}
+                    href={`https://wa.me/917045899262?text=${encodeURIComponent(`Hello Miss Luxe! 🌹✨\n\nI'd like to order the *${bundle.name}* (${bundle.pieces} pieces) at ₹${bundle.price.toLocaleString("en-IN")}.\n\n*Payment Mode: Prepaid*\n\nKindly share your UPI details and confirm availability.\n\nThank you! 🌸`)}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="btn-gold px-4 py-2 text-xs tracking-widest"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      window.open(
-                        `https://wa.me/917045899262?text=${encodeURIComponent(`🌟 I'd like to order the ${bundle.name} (₹${bundle.price}) — ${bundle.pieces} pieces.\n\nPlease share payment and delivery details.\n\nThank you!`)}`,
-                        "_blank",
-                        "noopener,noreferrer",
-                      );
-                    }}
                   >
                     Order Now
                   </a>

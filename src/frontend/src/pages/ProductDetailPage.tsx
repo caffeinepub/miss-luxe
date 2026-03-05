@@ -114,40 +114,39 @@ export default function ProductDetailPage({
     setTimeout(() => setAdded(false), 1500);
   };
 
-  const handleWhatsApp = () => {
+  const buildWhatsAppHref = () => {
     const lines: string[] = [];
-    lines.push("Hello Miss Luxe! 🌹");
+    lines.push("Hello Miss Luxe! 🌹✨");
     lines.push("");
-    lines.push("*New Order Request*");
+    lines.push("I would like to place an order for your exquisite creation.");
     lines.push("");
-    lines.push("*Product:*");
-    lines.push(
-      `- ${product.name} x${qty} — ₹${totalCost.toLocaleString("en-IN")}`,
-    );
-    lines.push("");
+    lines.push("*Order Details:*");
+    lines.push(`◈ Product: ${product.name}`);
+    lines.push(`◈ Quantity: ${qty} box${qty > 1 ? "es" : ""}`);
     if (
       giftMessage.trim() ||
       ribbonColor !== "Gold" ||
       packagingStyle !== "Standard" ||
       greetingCard
     ) {
-      lines.push("*Customisation:*");
-      if (ribbonColor) lines.push(`  Ribbon: ${ribbonColor}`);
-      if (packagingStyle) lines.push(`  Packaging: ${packagingStyle}`);
-      if (greetingCard) lines.push("  Greeting Card: Yes (+₹50)");
-      if (giftMessage.trim())
-        lines.push(`  Gift Message: "${giftMessage.trim()}"`);
       lines.push("");
+      lines.push("*Personalisation:*");
+      if (ribbonColor && ribbonColor !== "Gold")
+        lines.push(`◈ Ribbon: ${ribbonColor}`);
+      if (packagingStyle && packagingStyle !== "Standard")
+        lines.push(`◈ Packaging: ${packagingStyle}`);
+      if (greetingCard) lines.push("◈ Greeting Card: Yes (+₹50)");
+      if (giftMessage.trim())
+        lines.push(`◈ Gift Message: "${giftMessage.trim()}"`);
     }
-    lines.push(`*Order Total: ₹${totalCost.toLocaleString("en-IN")}*`);
-    lines.push("*Payment: Prepaid*");
     lines.push("");
-    lines.push("Please confirm availability and payment details. Thank you!");
-    window.open(
-      `https://wa.me/917045899262?text=${encodeURIComponent(lines.join("\n"))}`,
-      "_blank",
-      "noopener,noreferrer",
-    );
+    lines.push(`*Total: ₹${totalCost.toLocaleString("en-IN")}*`);
+    lines.push("*Payment Mode: Prepaid*");
+    lines.push("");
+    lines.push("Kindly share your UPI details and confirm availability.");
+    lines.push("");
+    lines.push("Thank you! 🌸");
+    return `https://wa.me/917045899262?text=${encodeURIComponent(lines.join("\n"))}`;
   };
 
   return (
@@ -337,15 +336,24 @@ export default function ProductDetailPage({
                     <ShoppingBag size={16} />
                     {added ? "Added to Cart ✓" : "Add to Cart"}
                   </button>
-                  <button
-                    type="button"
-                    onClick={handleWhatsApp}
+                  <a
+                    href={buildWhatsAppHref()}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="flex items-center justify-center gap-2 py-4 px-8 text-xs font-medium tracking-widest uppercase transition-all duration-300 flex-1 text-white"
                     style={{ backgroundColor: "oklch(0.52 0.17 145)" }}
+                    onMouseEnter={(e) => {
+                      (e.currentTarget as HTMLElement).style.backgroundColor =
+                        "oklch(0.45 0.17 145)";
+                    }}
+                    onMouseLeave={(e) => {
+                      (e.currentTarget as HTMLElement).style.backgroundColor =
+                        "oklch(0.52 0.17 145)";
+                    }}
                   >
                     <SiWhatsapp size={16} />
                     Order on WhatsApp
-                  </button>
+                  </a>
                 </div>
 
                 {/* Product specs */}

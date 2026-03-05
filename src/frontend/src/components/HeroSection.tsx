@@ -105,18 +105,10 @@ export default function HeroSection() {
             Explore Collection
           </button>
           <a
-            href="https://wa.me/917045899262?text=Hello%20Miss%20Luxe!%20I%27d%20like%20to%20enquire%20about%20your%20products."
+            href={`https://wa.me/917045899262?text=${encodeURIComponent("Hello Miss Luxe! 🌹✨\n\nI'd like to enquire about your luxury date chocolate collection.\n\nCould you please help me place an order?\n\nThank you!")}`}
             target="_blank"
             rel="noopener noreferrer"
             className="border border-luxury-gold/60 text-luxury-gold hover:bg-luxury-gold/10 transition-all duration-300 px-12 py-4 text-sm tracking-[0.25em] font-sans uppercase text-center"
-            onClick={(e) => {
-              e.preventDefault();
-              window.open(
-                "https://wa.me/917045899262?text=Hello%20Miss%20Luxe!%20I%27d%20like%20to%20enquire%20about%20your%20products.",
-                "_blank",
-                "noopener,noreferrer",
-              );
-            }}
           >
             Order on WhatsApp
           </a>

@@ -255,18 +255,10 @@ export default function TrackOrderPage() {
             <p className="font-sans text-luxury-beige/30 text-xs leading-relaxed">
               For order queries, reach us on{" "}
               <a
-                href="https://wa.me/917045899262"
+                href={`https://wa.me/917045899262?text=${encodeURIComponent("Hello Miss Luxe! 🌹\n\nI have a query regarding my order. Could you please help me?")}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-luxury-gold/60 hover:text-luxury-gold transition-colors"
-                onClick={(e) => {
-                  e.preventDefault();
-                  window.open(
-                    "https://wa.me/917045899262",
-                    "_blank",
-                    "noopener,noreferrer",
-                  );
-                }}
               >
                 WhatsApp
               </a>{" "}
