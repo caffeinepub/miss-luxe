@@ -123,7 +123,9 @@ export default function Navigation({ onCartOpen }: NavigationProps) {
               className="text-luxury-beige/60 hover:text-luxury-gold transition-colors"
               aria-label="Follow Miss Luxe on Instagram"
             >
-              <SiInstagram className="w-4 h-4" />
+              <span className="w-4 h-4 flex items-center justify-center">
+                <SiInstagram size={16} />
+              </span>
             </a>
           </div>
 
@@ -306,7 +308,9 @@ export default function Navigation({ onCartOpen }: NavigationProps) {
               className="flex items-center gap-2 w-full font-sans text-sm tracking-widest uppercase text-luxury-beige/70 hover:text-luxury-gold transition-colors py-2"
               onClick={() => setMobileOpen(false)}
             >
-              <SiInstagram className="w-4 h-4" />
+              <span className="w-4 h-4 flex items-center justify-center">
+                <SiInstagram size={16} />
+              </span>
               Instagram
             </a>
             <a
@@ -314,6 +318,15 @@ export default function Navigation({ onCartOpen }: NavigationProps) {
               target="_blank"
               rel="noopener noreferrer"
               className="btn-gold block text-center py-3 text-sm"
+              onClick={(e) => {
+                e.preventDefault();
+                setMobileOpen(false);
+                window.open(
+                  "https://wa.me/917045899262",
+                  "_blank",
+                  "noopener,noreferrer",
+                );
+              }}
             >
               Order Now
             </a>

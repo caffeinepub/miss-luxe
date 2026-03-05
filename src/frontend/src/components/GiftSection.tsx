@@ -31,6 +31,14 @@ export default function GiftSection() {
             target="_blank"
             rel="noopener noreferrer"
             className="btn-gold px-10 py-3 text-sm tracking-widest"
+            onClick={(e) => {
+              e.preventDefault();
+              window.open(
+                "https://wa.me/917045899262?text=I'm%20interested%20in%20your%20gift%20collections",
+                "_blank",
+                "noopener,noreferrer",
+              );
+            }}
           >
             Shop Gift Sets
           </a>
@@ -124,6 +132,14 @@ export default function GiftSection() {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="btn-gold px-4 py-2 text-xs tracking-widest"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      window.open(
+                        `https://wa.me/917045899262?text=${encodeURIComponent(`🌟 I'd like to order the ${bundle.name} (₹${bundle.price}) — ${bundle.pieces} pieces.\n\nPlease share payment and delivery details.\n\nThank you!`)}`,
+                        "_blank",
+                        "noopener,noreferrer",
+                      );
+                    }}
                   >
                     Order Now
                   </a>

@@ -1,7 +1,11 @@
 import { X } from "lucide-react";
 import { useEffect, useState } from "react";
 
-const DISMISSED_KEY = "miss-luxe-ramadan-banner-dismissed";
+// Versioned key — changing this resets dismissal for a new season
+const DISMISSED_KEY = "miss-luxe-ramadan-2026-dismissed";
+
+const WA_HREF =
+  "https://wa.me/917045899262?text=Ramadan%202026%20%26%20Eid%20Special%20Gifting%20-%20I%27d%20like%20to%20order%20from%20Miss%20Luxe";
 
 type SvgProps = { className?: string; style?: React.CSSProperties };
 
@@ -163,7 +167,7 @@ export default function RamadanEidBanner() {
                 fontFamily: "'Playfair Display', serif",
               }}
             >
-              Ramadan Mubarak &amp; Eid Mubarak
+              Ramadan 2026 Mubarak &amp; Eid Mubarak
               <span
                 className="mx-1.5 hidden sm:inline"
                 style={{ color: "oklch(0.78 0.12 80 / 0.5)" }}
@@ -190,7 +194,7 @@ export default function RamadanEidBanner() {
               style={{ color: "oklch(0.92 0.02 80 / 0.65)" }}
             >
               Celebrate with our handcrafted date chocolates — perfect for
-              gifting
+              Ramadan &amp; Eid gifting
             </p>
           </div>
 
@@ -227,7 +231,7 @@ export default function RamadanEidBanner() {
           {/* CTA button */}
           <a
             data-ocid="banner.primary_button"
-            href="https://wa.me/917045899262?text=Ramadan%20%26%20Eid%20Special%20Gifting%20-%20I%27d%20like%20to%20order%20from%20Miss%20Luxe"
+            href={WA_HREF}
             target="_blank"
             rel="noopener noreferrer"
             className="mt-1 shrink-0 px-4 py-1.5 font-sans text-xs font-semibold uppercase tracking-widest transition-all duration-300 sm:mt-0"
@@ -236,6 +240,10 @@ export default function RamadanEidBanner() {
               color: "oklch(0.08 0.005 60)",
               borderRadius: "1px",
               letterSpacing: "0.12em",
+            }}
+            onClick={(e) => {
+              e.preventDefault();
+              window.open(WA_HREF, "_blank", "noopener,noreferrer");
             }}
             onMouseEnter={(e) => {
               (e.currentTarget as HTMLAnchorElement).style.background =

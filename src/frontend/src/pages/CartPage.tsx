@@ -507,7 +507,9 @@ export default function CartPage() {
                         "oklch(0.52 0.17 145)";
                     }}
                   >
-                    <SiWhatsapp className="w-5 h-5" />
+                    <span className="w-5 h-5 flex items-center justify-center flex-shrink-0">
+                      <SiWhatsapp size={20} />
+                    </span>
                     Place Order via WhatsApp
                   </button>
 

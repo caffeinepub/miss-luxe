@@ -125,6 +125,14 @@ export default function AboutSection() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-block border border-luxury-gold/30 text-luxury-beige/70 hover:border-luxury-gold hover:text-luxury-gold transition-all duration-300 px-8 py-3 font-sans text-sm tracking-widest uppercase text-center"
+                onClick={(e) => {
+                  e.preventDefault();
+                  window.open(
+                    "https://wa.me/917045899262?text=Hello%20Miss%20Luxe!%20I%27d%20like%20to%20enquire%20about%20your%20products.",
+                    "_blank",
+                    "noopener,noreferrer",
+                  );
+                }}
               >
                 Enquire Now
               </a>

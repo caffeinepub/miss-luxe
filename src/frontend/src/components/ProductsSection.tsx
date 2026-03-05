@@ -291,6 +291,18 @@ function HeroProduct({
                 rel="noopener noreferrer"
                 className="flex items-center justify-center gap-2.5 py-4 px-8 text-xs font-semibold tracking-[0.25em] uppercase transition-all duration-300 flex-1 text-white"
                 style={{ backgroundColor: "oklch(0.52 0.17 145)" }}
+                onClick={(e) => {
+                  e.preventDefault();
+                  window.open(
+                    generateWhatsAppOrderMessage(
+                      product.name,
+                      qty,
+                      product.price,
+                    ),
+                    "_blank",
+                    "noopener,noreferrer",
+                  );
+                }}
                 onMouseEnter={(e) => {
                   (e.currentTarget as HTMLElement).style.backgroundColor =
                     "oklch(0.45 0.17 145)";
@@ -300,7 +312,9 @@ function HeroProduct({
                     "oklch(0.52 0.17 145)";
                 }}
               >
-                <SiWhatsapp className="w-4 h-4" />
+                <span className="w-4 h-4 flex items-center justify-center flex-shrink-0">
+                  <SiWhatsapp size={16} />
+                </span>
                 Order on WhatsApp
               </a>
             </div>
@@ -467,6 +481,14 @@ function SecondaryProductCard({
             rel="noopener noreferrer"
             className="flex items-center justify-center gap-1.5 py-3 px-4 text-xs font-semibold tracking-[0.2em] uppercase transition-all duration-300 flex-1 text-white"
             style={{ backgroundColor: "oklch(0.52 0.17 145)" }}
+            onClick={(e) => {
+              e.preventDefault();
+              window.open(
+                generateWhatsAppOrderMessage(product.name, qty, product.price),
+                "_blank",
+                "noopener,noreferrer",
+              );
+            }}
             onMouseEnter={(e) => {
               (e.currentTarget as HTMLElement).style.backgroundColor =
                 "oklch(0.45 0.17 145)";
@@ -476,7 +498,9 @@ function SecondaryProductCard({
                 "oklch(0.52 0.17 145)";
             }}
           >
-            <SiWhatsapp className="w-3.5 h-3.5" />
+            <span className="w-3.5 h-3.5 flex items-center justify-center flex-shrink-0">
+              <SiWhatsapp size={14} />
+            </span>
             WhatsApp
           </a>
         </div>
@@ -594,6 +618,14 @@ export default function ProductsSection() {
             target="_blank"
             rel="noopener noreferrer"
             className="btn-gold inline-block px-12 py-4 text-sm tracking-[0.25em]"
+            onClick={(e) => {
+              e.preventDefault();
+              window.open(
+                "https://wa.me/917045899262",
+                "_blank",
+                "noopener,noreferrer",
+              );
+            }}
           >
             Order a Custom Box
           </a>

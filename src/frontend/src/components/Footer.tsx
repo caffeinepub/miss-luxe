@@ -63,8 +63,18 @@ export default function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-3 font-sans text-luxury-beige/50 text-sm hover:text-luxury-gold transition-colors"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    window.open(
+                      "https://wa.me/917045899262",
+                      "_blank",
+                      "noopener,noreferrer",
+                    );
+                  }}
                 >
-                  <SiWhatsapp className="w-4 h-4 shrink-0" />
+                  <span className="w-4 h-4 flex items-center justify-center flex-shrink-0">
+                    <SiWhatsapp size={16} />
+                  </span>
                   <span>+91 70458 99262</span>
                 </a>
               </li>
@@ -84,7 +94,9 @@ export default function Footer() {
                   rel="noopener noreferrer"
                   className="flex items-center gap-3 font-sans text-luxury-beige/50 text-sm hover:text-luxury-gold transition-colors"
                 >
-                  <SiInstagram className="w-4 h-4 shrink-0" />
+                  <span className="w-4 h-4 flex items-center justify-center flex-shrink-0">
+                    <SiInstagram size={16} />
+                  </span>
                   <span>@miss.luxeco</span>
                 </a>
               </li>

@@ -31,11 +31,11 @@ export const products: Product[] = [
     price: 399,
     image: "/assets/generated/product-box-signature.dim_800x800.jpg",
     shortDescription:
-      "Six handcrafted date chocolates in our signature black lacquer box — the ideal luxury gift.",
+      "Six masterfully hand-stuffed Medjool dates, draped in Belgian chocolate and finished with edible 24K gold leaf — presented in our signature black lacquer box. The quintessential Miss Luxe experience.",
     description:
-      "Begin your Miss Luxe journey with our Signature Luxe Box — six handpicked premium Medjool dates, each carefully hand-stuffed with our finest fillings and finished with edible gold leaf. Nestled in a bespoke black matte box with gold-foil lining, this is the quintessential expression of artisanal luxury gifting. Every piece is a testament to our unwavering commitment to quality and craftsmanship. Whether you are discovering us for the first time or gifting a loved one, the Signature Luxe Box speaks in the language of elegance.",
+      "Welcome to Miss Luxe. The Signature Luxe Box is where every great love affair with luxury begins. Six of our finest Medjool dates — plump, naturally sweet, and sourced from the most pristine groves — are hand-stuffed by our artisans with a rotating selection of our signature fillings: silken pistachio cream, delicate almond blossom, and fragrant rose petal. Each date is then enrobed in 72% Belgian dark chocolate and crowned with a whisper of edible 24K gold leaf. Nestled in our iconic black matte lacquer box, lined with shimmering gold tissue, the Signature Luxe Box is not merely a purchase. It is a declaration — that you have chosen beauty, craftsmanship, and the finest ingredients the world has to offer. Prices are inclusive of premium packaging. Prepaid only.",
     story:
-      "Born from a desire to redefine gifting in India, the Signature Luxe Box was our first creation — and it remains our most beloved. Every date is selected for its caramel richness, plumpness, and natural sweetness before being hand-crafted by our artisans. We obsessed over every detail — the weight of the box, the sheen of the foil, the exact moment the chocolate sets to a perfect snap. What emerged was not just a product, but a promise: that Miss Luxe would never compromise on what it means to give beautifully.",
+      "The Signature Luxe Box was the first creation to carry the Miss Luxe name — and it remains the truest expression of who we are. Before we chose our dates, we tasted more than forty varieties. Before we selected our chocolate, we sourced from five Belgian suppliers. Before we designed our box, we sketched over a hundred iterations. We obsessed over every dimension — the weight of the lid, the softness of the tissue, the exact silence of the magnetic clasp closing. What emerged was not just a product, but a promise: that Miss Luxe would never compromise. That every single box, regardless of size or price, would be held to the same unrelenting standard of excellence. The Signature Luxe Box is the beginning of that promise.",
     flavours: ["Royal Pistachio", "Almond Blossom", "Rose Petal Dream"],
     ingredients:
       "Premium Medjool dates, Iranian pistachios, California almonds, organic dried rose petals, edible 24K gold leaf, 72% Belgian dark chocolate, natural flavourings",
@@ -53,7 +53,7 @@ export const products: Product[] = [
     storageInstructions:
       "Store in a cool, dry place below 25°C. Refrigerate after opening.",
     includes:
-      "Premium black matte box, gold foil tissue, handwritten note card",
+      "Signature black matte lacquer box · 24K gold foil tissue lining · Handwritten calligraphy note card · Miss Luxe brand ribbon seal",
     occasions: "Daily Indulgence · Gifting · Celebrations",
   },
   {
@@ -66,11 +66,11 @@ export const products: Product[] = [
     price: 699,
     image: "/assets/generated/product-box-grand.dim_800x800.jpg",
     shortDescription:
-      "Twelve handcrafted date chocolates in a royal two-tier box — perfect for engagements, Eid, and birthdays.",
+      "Twelve individually hand-crafted date chocolates, each a unique expression of flavour and artistry, presented in a two-tier royal presentation box with gold ribbon and wax seal — the most gifted box in our collection.",
     description:
-      "Twelve exquisite hand-crafted dates arranged in two elegant rows, each a unique expression of flavour and artistry. The Grand Luxe Box is our most popular gifting choice for engagements, Eid celebrations, birthdays, and corporate gifting. Every piece is a conversation — from the warmth of saffron to the luxury of dark chocolate, from the freshness of pistachio to the delicate perfume of rose. Presented in a royal two-tier presentation box with gold foil stamping and a hand-tied satin ribbon, this box announces its presence the moment it is placed in someone's hands.",
+      "There are gifts, and then there are gestures. The Grand Luxe Box is unmistakably the latter. Twelve of our finest Medjool dates, each hand-stuffed with a distinct filling and individually dressed in premium Belgian chocolate, are arranged in two elegant rows across a royal two-tier presentation box with gold foil stamping and a hand-tied satin ribbon. From the warmth of pure saffron to the opulence of 70% dark chocolate velvet, from the freshness of roasted pistachio to the delicacy of almond blossom — every piece in this collection tells a different story. Together, they tell one of extraordinary taste, rare generosity, and a gifting sensibility that knows no compromise. The Grand Luxe Box is the collection of choice for engagements, Eid celebrations, milestone birthdays, and corporate gifting that leaves a lasting impression. Prices are inclusive of premium packaging. Prepaid only.",
     story:
-      "Designed for the moments that deserve more — the Grand Luxe Box doubles the indulgence and triples the impression. When we created this collection, we thought about the woman opening a gift at her engagement. The family gathered for Eid. The colleague celebrating a promotion. Each date in this collection tells a different flavour story, and together they tell one of generosity, sophistication, and care. This is what Miss Luxe was made for.",
+      "We designed the Grand Luxe Box for the moments that deserve more than a gift — they deserve an experience. When we imagined who would open this box, we thought of the bride receiving it on her engagement morning. The family gathering around it on the first evening of Eid. The colleague who has earned something truly memorable. We wanted the act of unboxing to feel as significant as what was inside — the quiet resistance of the ribbon, the slow lift of the lid revealing two perfect rows of gold-cupped dates, the scent of chocolate and saffron rising to meet you. Every decision — the weight of the paper, the shimmer of the foil, the precise height of each tier — was made with that moment in mind. The Grand Luxe Box is Miss Luxe at its most generous.",
     flavours: [
       "Royal Pistachio",
       "Almond Blossom",
@@ -96,7 +96,7 @@ export const products: Product[] = [
     storageInstructions:
       "Store in a cool, dry place below 25°C. Refrigerate after opening.",
     includes:
-      "Premium black gift box with gold ribbon, individual gold foil cups, brand certificate of authenticity",
+      "Royal two-tier black gift box · Hand-tied gold satin ribbon · Individual 24K gold foil cups · Embossed wax seal · Miss Luxe certificate of authenticity · Personalised gift message card",
     occasions: "Engagements · Eid · Birthdays · Corporate",
   },
   {
@@ -109,11 +109,11 @@ export const products: Product[] = [
     price: 1199,
     image: "/assets/generated/product-box-royal.dim_800x800.jpg",
     shortDescription:
-      "Eighteen handcrafted masterpieces in a multi-tier velvet-lined lacquer box — the ultimate expression of luxury.",
+      "Eighteen hand-crafted masterpieces presenting the full breadth of the Miss Luxe artisan collection — encased in a black velvet collector box with gold embossed crest, silk ribbon, and brass clasps. For the moments that must be remembered forever.",
     description:
-      "For those who accept nothing less than extraordinary. The Royal Collector Box presents eighteen masterfully crafted dates in our most opulent packaging — a black velvet box with gold embossed Miss Luxe crest, satin interior, and individually cupped dates that showcase the full breadth of our artisan collection. This is not simply a gift. It is an event. A declaration of exceptional taste and profound generosity. Reserved for weddings, milestone anniversaries, and the kind of moments that deserve to be remembered forever.",
+      "Some things in life are not gifts — they are events. The Royal Collector Box is one of them. Eighteen masterfully crafted Medjool dates, each representing a different flavour story from our full artisan collection, are presented in our most extraordinary packaging: a hand-lacquered black velvet collector box bearing the gold-embossed Miss Luxe crest, a silk-lined interior, individually recessed gold foil cups, and brass magnetic clasps that close with the quiet authority of something truly precious. Every flavour in the Miss Luxe repertoire is represented here — from the iconic Royal Pistachio and fragrant Rose Petal Dream to the exotic Walnut Honey, the jewel-toned Cranberry Bliss, and the sophisticated Orange Zest & Dark Chocolate. This is not a box that is opened casually. It is opened with intention, with ceremony, with someone beside you who matters. The Royal Collector Box is our magnum opus — produced in limited batches, available only while stock lasts. Prices are inclusive of premium packaging. Prepaid only.",
     story:
-      "The Royal Collector Box is our magnum opus — a collector's piece that doubles as a gifting masterpiece. When we set out to create the ultimate Miss Luxe experience, we began with a single question: what would we give to someone we love above all else? The answer was this — eighteen dates, each filled with a different story, each wrapped in chocolate and gold, each placed with the reverence of something irreplaceable. Every batch is handcrafted in limited quantities. Once they are gone, they are gone. This is luxury in its truest sense: rare, deliberate, and never mass-produced.",
+      "The Royal Collector Box began as an answer to a single question: what would we create if we were making something for someone we love above all else — and cost was never a consideration? We started from scratch. We sourced a velvet that had the exact depth of black we imagined. We commissioned a custom embossing die for the Miss Luxe crest. We agonised over the interior — the spacing between each cup, the way the silk lining would catch the light, the positioning of the brass clasps so that the lid opened at precisely the right speed. We tasted every combination of eighteen flavours until we found the arrangement that told the most complete story of who Miss Luxe is. The result is a collector's object that also happens to be the most beautiful gift imaginable. Every batch is handcrafted in limited quantities. Once they are gone, they do not return. This is luxury in its truest sense: rare, deliberate, and made for the irreplaceable.",
     flavours: [
       "Royal Pistachio",
       "Almond Blossom",
@@ -146,7 +146,7 @@ export const products: Product[] = [
     storageInstructions:
       "Store in a cool, dry place below 25°C. Refrigerate after opening.",
     includes:
-      "Black velvet collector box with gold embossing, silk ribbon, individual gold foil cups, Miss Luxe certificate of authenticity, complimentary gift message card",
-    occasions: "Weddings · Anniversaries · Corporate",
+      "Hand-lacquered black velvet collector box · Gold embossed Miss Luxe crest · Silk-lined interior with individual 24K gold foil cups · Brass magnetic clasp closure · Woven silk ribbon · Miss Luxe certificate of authenticity · Handwritten calligraphy gift card · Priority dispatch",
+    occasions: "Weddings · Anniversaries · Corporate · Collector's Edition",
   },
 ];

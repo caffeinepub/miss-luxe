@@ -259,6 +259,14 @@ export default function TrackOrderPage() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-luxury-gold/60 hover:text-luxury-gold transition-colors"
+                onClick={(e) => {
+                  e.preventDefault();
+                  window.open(
+                    "https://wa.me/917045899262",
+                    "_blank",
+                    "noopener,noreferrer",
+                  );
+                }}
               >
                 WhatsApp
               </a>{" "}

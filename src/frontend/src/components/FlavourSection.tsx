@@ -5,23 +5,23 @@ const flavours = [
     id: "pistachio",
     name: "Royal Pistachio Cream",
     description:
-      "Roasted pistachios blended into velvety cream, draped in 72% dark Belgian chocolate",
+      "Hand-roasted Iranian pistachios ground into a silken cream, hand-piped into a premium Medjool date and enrobed in 72% Belgian dark chocolate. Crowned with a single whole pistachio and a touch of edible gold. Rich, nutty, and unmistakably luxurious.",
     image: "/assets/generated/flavour-pistachio.dim_600x600.jpg",
     accent: "Bestseller",
   },
   {
     id: "almond-rose",
-    name: "Almond Rose",
+    name: "Almond Blossom",
     description:
-      "Delicate almond paste infused with rose water, enrobed in white Belgian chocolate",
+      "A delicate paste of California almonds, kissed with pure rose water and infused with dried rose petals, nestled inside a plump Medjool date and finished in white Belgian chocolate. Soft, floral, and hauntingly beautiful — like a garden in bloom.",
     image: "/assets/generated/flavour-almond-rose.dim_600x600.jpg",
     accent: "Romantic",
   },
   {
     id: "saffron-caramel",
-    name: "Saffron Caramel",
+    name: "Saffron Gold",
     description:
-      "Golden saffron woven through silken caramel, finished with fleur de sel and milk chocolate",
+      "The rarest spice in the world — pure Kashmiri saffron — slowly infused into a silken golden caramel, then folded into our date and enrobed in premium milk chocolate. Finished with a pinch of fleur de sel to reveal the depth beneath the sweetness. Opulent, warm, and utterly singular.",
     image: "/assets/generated/flavour-saffron-caramel.dim_600x600.jpg",
     accent: "Signature",
   },
@@ -29,7 +29,7 @@ const flavours = [
     id: "assorted",
     name: "Assorted Collection",
     description:
-      "The full Miss Luxe experience — all signature flavours in one magnificent arrangement",
+      "The complete Miss Luxe experience. Every signature flavour — pistachio, almond blossom, saffron gold, dark chocolate velvet, rose petal dream, and more — brought together in one magnificent arrangement. For those who refuse to choose just one.",
     image: "/assets/generated/flavour-assorted.dim_600x600.jpg",
     accent: "All Flavours",
   },

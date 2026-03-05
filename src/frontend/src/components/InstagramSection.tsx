@@ -49,7 +49,9 @@ export default function InstagramSection() {
             className="inline-flex items-center gap-3 group"
             aria-label="Follow Miss Luxe on Instagram"
           >
-            <SiInstagram className="w-7 h-7 text-luxury-gold/70 group-hover:text-luxury-gold transition-colors" />
+            <span className="w-7 h-7 flex items-center justify-center text-luxury-gold/70 group-hover:text-luxury-gold transition-colors">
+              <SiInstagram size={28} />
+            </span>
             <span className="font-serif text-3xl md:text-4xl lg:text-5xl text-luxury-beige group-hover:text-luxury-gold transition-colors">
               @miss.luxeco
             </span>
@@ -86,7 +88,9 @@ export default function InstagramSection() {
               />
               {/* Hover overlay */}
               <div className="absolute inset-0 bg-luxury-black/0 group-hover:bg-luxury-black/50 transition-all duration-300 flex items-center justify-center">
-                <SiInstagram className="w-6 h-6 text-luxury-gold opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <span className="w-6 h-6 flex items-center justify-center text-luxury-gold opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <SiInstagram size={24} />
+                </span>
               </div>
             </a>
           ))}
@@ -100,7 +104,9 @@ export default function InstagramSection() {
             rel="noopener noreferrer"
             className="inline-flex items-center gap-3 border border-luxury-gold/50 text-luxury-gold hover:bg-luxury-gold/10 transition-colors px-10 py-4 font-sans text-sm tracking-widest uppercase"
           >
-            <SiInstagram className="w-4 h-4" />
+            <span className="w-4 h-4 flex items-center justify-center">
+              <SiInstagram size={16} />
+            </span>
             Follow on Instagram
           </a>
         </div>

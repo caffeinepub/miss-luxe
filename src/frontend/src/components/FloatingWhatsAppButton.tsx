@@ -1,9 +1,11 @@
 import { SiWhatsapp } from "react-icons/si";
 
+const WA_HREF = "https://wa.me/917045899262";
+
 export default function FloatingWhatsAppButton() {
   return (
     <a
-      href="https://wa.me/917045899262"
+      href={WA_HREF}
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Chat with Miss Luxe on WhatsApp"
@@ -11,6 +13,10 @@ export default function FloatingWhatsAppButton() {
       style={{
         backgroundColor: "oklch(0.52 0.17 145)",
         boxShadow: "0 4px 20px oklch(0.52 0.17 145 / 0.5)",
+      }}
+      onClick={(e) => {
+        e.preventDefault();
+        window.open(WA_HREF, "_blank", "noopener,noreferrer");
       }}
       onMouseEnter={(e) => {
         (e.currentTarget as HTMLAnchorElement).style.boxShadow =
