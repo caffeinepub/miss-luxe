@@ -92,7 +92,7 @@ export default function ProductDetailPage({
           <button
             type="button"
             onClick={() => navigate({ to: "/" })}
-            className="btn-gold text-xs py-3 px-8"
+            className="btn-gold text-xs py-3 px-8 transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-[0_4px_16px_rgba(212,175,55,0.35)] active:scale-95"
           >
             Return to Collection
           </button>
@@ -124,6 +124,7 @@ export default function ProductDetailPage({
       customisation,
     );
     setAdded(true);
+    handleCartOpen();
     setTimeout(() => setAdded(false), 1500);
   };
 
@@ -320,8 +321,8 @@ export default function ProductDetailPage({
                       </span>
                       <button
                         type="button"
-                        onClick={() => setQty((q) => Math.min(8, q + 1))}
-                        disabled={qty >= 8}
+                        onClick={() => setQty((q) => Math.min(99, q + 1))}
+                        disabled={qty >= 99}
                         className="w-8 h-8 border border-luxury-gold/30 text-luxury-beige/70 hover:border-luxury-gold hover:text-luxury-gold disabled:opacity-30 disabled:cursor-not-allowed transition-colors flex items-center justify-center"
                         aria-label="Increase quantity"
                       >
@@ -344,19 +345,17 @@ export default function ProductDetailPage({
                   <button
                     type="button"
                     onClick={handleAddToCart}
-                    className="btn-gold flex items-center justify-center gap-2 text-xs py-4 px-8 flex-1"
+                    className="btn-gold flex items-center justify-center gap-2 text-xs py-4 px-8 flex-1 transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-[0_4px_16px_rgba(212,175,55,0.35)] active:scale-95"
                   >
                     <ShoppingBag size={16} />
                     {added ? "Added to Cart ✓" : "Add to Cart"}
                   </button>
                   <a
                     href={buildWhatsAppHref()}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      window.location.href = buildWhatsAppHref();
-                    }}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     data-ocid="product_detail.whatsapp.button"
-                    className="flex items-center justify-center gap-2 py-4 px-8 text-xs font-medium tracking-widest uppercase transition-all duration-300 flex-1 text-white cursor-pointer no-underline"
+                    className="flex items-center justify-center gap-2 py-4 px-8 text-xs font-medium tracking-widest uppercase transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-[0_4px_16px_rgba(37,211,102,0.3)] active:scale-95 flex-1 text-white cursor-pointer no-underline"
                     style={{ backgroundColor: "oklch(0.52 0.17 145)" }}
                     onMouseEnter={(e) => {
                       (e.currentTarget as HTMLElement).style.backgroundColor =

@@ -213,7 +213,7 @@ function HeroProduct({
             <div className="absolute inset-0 z-[3] flex items-end justify-center pb-8 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
               <a
                 href={`/product/${product.id}`}
-                className="btn-gold px-8 py-3 text-xs tracking-[0.25em]"
+                className="btn-gold px-8 py-3 text-xs tracking-[0.25em] transition-all duration-300 ease-out hover:-translate-y-0.5 hover:shadow-lg hover:shadow-[0_4px_20px_rgba(212,175,55,0.3)] active:scale-95 active:translate-y-0"
               >
                 View Full Details
               </a>
@@ -301,7 +301,7 @@ function HeroProduct({
                 type="button"
                 onClick={onAddToCart}
                 data-ocid="hero.product.add_to_cart.button"
-                className="btn-gold flex items-center justify-center gap-2.5 px-8 py-4 text-xs tracking-[0.25em] flex-1"
+                className="btn-gold flex items-center justify-center gap-2.5 px-8 py-4 text-xs tracking-[0.25em] flex-1 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:shadow-lg hover:shadow-[0_4px_20px_rgba(212,175,55,0.3)] active:scale-95 active:translate-y-0"
               >
                 {added ? (
                   <>
@@ -318,7 +318,7 @@ function HeroProduct({
                 target="_blank"
                 rel="noopener noreferrer"
                 data-ocid="hero.product.whatsapp.button"
-                className="flex items-center justify-center gap-2.5 py-4 px-8 text-xs font-semibold tracking-[0.25em] uppercase transition-all duration-300 flex-1 text-white cursor-pointer no-underline"
+                className="flex items-center justify-center gap-2.5 py-4 px-8 text-xs font-semibold tracking-[0.25em] uppercase flex-1 text-white cursor-pointer no-underline transition-all duration-300 ease-out hover:-translate-y-0.5 hover:shadow-[0_4px_20px_rgba(37,211,102,0.35)] active:scale-95 active:translate-y-0"
                 style={{ backgroundColor: "oklch(0.52 0.17 145)" }}
                 onMouseEnter={(e) => {
                   (e.currentTarget as HTMLElement).style.backgroundColor =
@@ -399,7 +399,7 @@ function SecondaryProductCard({
         <div className="absolute inset-0 z-[2] flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-400 bg-luxury-black/40">
           <a
             href={`/product/${product.id}`}
-            className="btn-gold px-6 py-2.5 text-xs tracking-[0.25em]"
+            className="btn-gold px-6 py-2.5 text-xs tracking-[0.25em] transition-all duration-300 ease-out hover:-translate-y-0.5 hover:shadow-[0_4px_20px_rgba(212,175,55,0.3)] active:scale-95 active:translate-y-0"
           >
             View Details
           </a>
@@ -488,7 +488,7 @@ function SecondaryProductCard({
             type="button"
             onClick={onAddToCart}
             data-ocid={`product.add_to_cart.button.${index + 1}`}
-            className="btn-gold flex items-center justify-center gap-1.5 px-4 py-3 text-xs tracking-[0.2em] flex-1"
+            className="btn-gold flex items-center justify-center gap-1.5 px-4 py-3 text-xs tracking-[0.2em] flex-1 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:shadow-lg hover:shadow-[0_4px_20px_rgba(212,175,55,0.3)] active:scale-95 active:translate-y-0"
           >
             {added ? (
               <>
@@ -505,7 +505,7 @@ function SecondaryProductCard({
             target="_blank"
             rel="noopener noreferrer"
             data-ocid={`product.whatsapp.button.${index + 1}`}
-            className="flex items-center justify-center gap-1.5 py-3 px-4 text-xs font-semibold tracking-[0.2em] uppercase transition-all duration-300 flex-1 text-white cursor-pointer no-underline"
+            className="flex items-center justify-center gap-1.5 py-3 px-4 text-xs font-semibold tracking-[0.2em] uppercase flex-1 text-white cursor-pointer no-underline transition-all duration-300 ease-out hover:-translate-y-0.5 hover:shadow-[0_4px_20px_rgba(37,211,102,0.35)] active:scale-95 active:translate-y-0"
             style={{ backgroundColor: "oklch(0.52 0.17 145)" }}
             onMouseEnter={(e) => {
               (e.currentTarget as HTMLElement).style.backgroundColor =
@@ -539,7 +539,7 @@ export default function ProductsSection({
   const changeQty = (id: string, delta: number) => {
     setQuantities((prev) => ({
       ...prev,
-      [id]: Math.max(1, Math.min(8, (prev[id] ?? 1) + delta)),
+      [id]: Math.max(1, Math.min(99, (prev[id] ?? 1) + delta)),
     }));
   };
 
@@ -637,7 +637,7 @@ export default function ProductsSection({
             target="_blank"
             rel="noopener noreferrer"
             data-ocid="products.custom_order.button"
-            className="btn-gold inline-block px-12 py-4 text-sm tracking-[0.25em] cursor-pointer no-underline"
+            className="btn-gold inline-block px-12 py-4 text-sm tracking-[0.25em] cursor-pointer no-underline transition-all duration-300 ease-out hover:-translate-y-0.5 hover:shadow-lg hover:shadow-[0_4px_20px_rgba(212,175,55,0.3)] active:scale-95 active:translate-y-0"
           >
             Order a Custom Box
           </a>
