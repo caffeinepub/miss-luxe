@@ -6,6 +6,8 @@ export interface Product {
   badge: string;
   pieces: number;
   price: number;
+  originalPrice: number;
+  offerLabel: string;
   image: string;
   description: string;
   story: string;
@@ -29,6 +31,8 @@ export const products: Product[] = [
     badge: "Bestseller",
     pieces: 6,
     price: 399,
+    originalPrice: 799,
+    offerLabel: "Founder's Price",
     image: "/assets/generated/product-box-signature.dim_800x800.jpg",
     shortDescription:
       "Six masterfully hand-stuffed Medjool dates, draped in Belgian chocolate and finished with edible 24K gold leaf — presented in our signature black lacquer box. The quintessential Miss Luxe experience.",
@@ -64,6 +68,8 @@ export const products: Product[] = [
     badge: "Most Gifted",
     pieces: 12,
     price: 699,
+    originalPrice: 1299,
+    offerLabel: "Launch Offer",
     image: "/assets/generated/product-box-grand.dim_800x800.jpg",
     shortDescription:
       "Twelve individually hand-crafted date chocolates, each a unique expression of flavour and artistry, presented in a two-tier royal presentation box with gold ribbon and wax seal — the most gifted box in our collection.",
@@ -107,6 +113,8 @@ export const products: Product[] = [
     badge: "Limited Edition",
     pieces: 18,
     price: 1199,
+    originalPrice: 1999,
+    offerLabel: "Exclusive Offer",
     image: "/assets/generated/product-box-royal.dim_800x800.jpg",
     shortDescription:
       "Eighteen hand-crafted masterpieces presenting the full breadth of the Miss Luxe artisan collection — encased in a black velvet collector box with gold embossed crest, silk ribbon, and brass clasps. For the moments that must be remembered forever.",

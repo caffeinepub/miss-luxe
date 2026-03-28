@@ -2,6 +2,24 @@ import type { CartItem } from "../context/CartContext";
 
 const WHATSAPP_NUMBER = "917045899262";
 
+/**
+ * Returns a WhatsApp URL that works reliably on all platforms
+ * including ICP-hosted apps.
+ * - Uses https://wa.me/ which is the universal redirect
+ */
+export function generateWhatsAppLink(message: string): string {
+  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+}
+
+/**
+ * Opens WhatsApp reliably on ICP-hosted apps.
+ * Avoids popup blockers by setting window.location directly.
+ */
+export function openWhatsApp(message: string): void {
+  const url = generateWhatsAppLink(message);
+  window.location.href = url;
+}
+
 export function formatOrderMessage(items: CartItem[]): string {
   const lines: string[] = [];
 
@@ -36,10 +54,6 @@ export function formatOrderMessage(items: CartItem[]): string {
   lines.push("Thank you for choosing Miss Luxe. 🖤✨");
 
   return lines.join("\n");
-}
-
-export function generateWhatsAppLink(message: string): string {
-  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
 }
 
 export function formatProductForWhatsApp(

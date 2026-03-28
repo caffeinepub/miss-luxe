@@ -25,8 +25,8 @@ export default function CartDrawer({ open, onClose }: CartDrawerProps) {
   const { items, removeItem, updateQuantity, totalPrice, totalItems } =
     useCart();
 
-  const whatsappCheckout = () => {
-    if (items.length === 0) return;
+  const buildWhatsAppHref = () => {
+    if (items.length === 0) return "#";
     const orderText = items
       .map((item) => {
         const greetingExtra = item.customisation?.greetingCard ? 50 : 0;
@@ -44,11 +44,7 @@ export default function CartDrawer({ open, onClose }: CartDrawerProps) {
       })
       .join("\n");
     const message = `Hello Miss Luxe! 🌹✨\n\nI'd like to place an order:\n\n${orderText}\n\n*Total: ₹${totalPrice.toLocaleString()}*\n\n*Payment Mode: Prepaid*\nKindly share your UPI details to confirm. Thank you! 🌸`;
-    const link = document.createElement("a");
-    link.href = `https://wa.me/917045899262?text=${encodeURIComponent(message)}`;
-    link.target = "_blank";
-    link.rel = "noopener noreferrer";
-    link.click();
+    return `https://wa.me/917045899262?text=${encodeURIComponent(message)}`;
   };
 
   return (
@@ -214,10 +210,14 @@ export default function CartDrawer({ open, onClose }: CartDrawerProps) {
                 ₹{totalPrice.toLocaleString()}
               </span>
             </div>
-            <button
-              type="button"
-              onClick={whatsappCheckout}
-              className="btn-gold w-full py-4 text-center relative overflow-hidden group/btn tracking-[0.25em] text-sm"
+            <a
+              href={buildWhatsAppHref()}
+              onClick={(e) => {
+                e.preventDefault();
+                window.location.href = buildWhatsAppHref();
+              }}
+              data-ocid="cart.whatsapp_checkout.button"
+              className="btn-gold w-full py-4 text-center relative overflow-hidden group/btn tracking-[0.25em] text-sm no-underline block"
             >
               <span className="relative z-[1] flex items-center justify-center gap-2">
                 Order via WhatsApp
@@ -231,7 +231,7 @@ export default function CartDrawer({ open, onClose }: CartDrawerProps) {
                   animation: "shimmer 2s linear infinite",
                 }}
               />
-            </button>
+            </a>
             <p className="text-luxury-beige/30 font-sans text-xs text-center tracking-wide">
               Prepaid orders only · Redirected to WhatsApp
             </p>

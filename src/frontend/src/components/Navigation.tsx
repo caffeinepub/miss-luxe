@@ -18,6 +18,10 @@ interface NavigationProps {
   onCartOpen: () => void;
 }
 
+const ORDER_WA_HREF = `https://wa.me/917045899262?text=${encodeURIComponent(
+  "Hello Miss Luxe! 🌹✨\n\nI'd like to place an order. Could you please help me choose the perfect box?\n\nThank you!",
+)}`;
+
 export default function Navigation({ onCartOpen }: NavigationProps) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -35,7 +39,6 @@ export default function Navigation({ onCartOpen }: NavigationProps) {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Close dropdown on outside click
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (
@@ -56,9 +59,7 @@ export default function Navigation({ onCartOpen }: NavigationProps) {
       return;
     }
     const el = document.getElementById(id);
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth" });
-    }
+    if (el) el.scrollIntoView({ behavior: "smooth" });
   };
 
   const navLinks = [
@@ -73,7 +74,7 @@ export default function Navigation({ onCartOpen }: NavigationProps) {
       className={`fixed top-0 left-0 right-0 z-30 transition-all duration-300 ${
         scrolled || mobileOpen
           ? "bg-luxury-black/95 backdrop-blur-md border-b border-luxury-gold/20"
-          : "bg-transparent"
+          : "bg-luxury-black/60 backdrop-blur-sm"
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -99,20 +100,20 @@ export default function Navigation({ onCartOpen }: NavigationProps) {
                 key={link.id}
                 type="button"
                 onClick={() => scrollToSection(link.id)}
-                className="nav-link font-sans text-sm tracking-widest uppercase text-luxury-beige/70 hover:text-luxury-gold transition-colors"
+                className="nav-link font-sans text-sm tracking-widest uppercase text-luxury-beige/80 hover:text-luxury-gold transition-colors"
               >
                 {link.label}
               </button>
             ))}
             <a
               href="/about"
-              className="nav-link font-sans text-sm tracking-widest uppercase text-luxury-beige/70 hover:text-luxury-gold transition-colors"
+              className="nav-link font-sans text-sm tracking-widest uppercase text-luxury-beige/80 hover:text-luxury-gold transition-colors"
             >
               Our Story
             </a>
             <a
               href="/track"
-              className="nav-link font-sans text-sm tracking-widest uppercase text-luxury-beige/70 hover:text-luxury-gold transition-colors"
+              className="nav-link font-sans text-sm tracking-widest uppercase text-luxury-beige/80 hover:text-luxury-gold transition-colors"
             >
               Track Order
             </a>
@@ -120,24 +121,21 @@ export default function Navigation({ onCartOpen }: NavigationProps) {
               href="https://instagram.com/miss.luxeco"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-luxury-beige/60 hover:text-luxury-gold transition-colors"
+              className="text-luxury-beige/70 hover:text-luxury-gold transition-colors"
               aria-label="Follow Miss Luxe on Instagram"
             >
-              <span className="w-4 h-4 flex items-center justify-center">
-                <SiInstagram size={16} />
-              </span>
+              <SiInstagram size={16} />
             </a>
           </div>
 
           {/* Right Actions */}
           <div className="flex items-center gap-3 md:gap-4">
-            {/* Internet Identity auth */}
             {!isAuthenticated ? (
               <button
                 type="button"
                 onClick={login}
                 disabled={isLoggingIn || isInitializing}
-                className="hidden md:flex items-center gap-1.5 font-sans text-xs uppercase tracking-widest text-luxury-gold/70 hover:text-luxury-gold transition-colors disabled:opacity-40"
+                className="hidden md:flex items-center gap-1.5 font-sans text-xs uppercase tracking-widest text-luxury-gold/80 hover:text-luxury-gold transition-colors disabled:opacity-40"
                 aria-label="Sign in"
               >
                 {isLoggingIn ? (
@@ -152,7 +150,7 @@ export default function Navigation({ onCartOpen }: NavigationProps) {
                 <button
                   type="button"
                   onClick={() => setAccountOpen((prev) => !prev)}
-                  className="flex items-center gap-1.5 text-luxury-gold/70 hover:text-luxury-gold transition-colors p-1"
+                  className="flex items-center gap-1.5 text-luxury-gold/80 hover:text-luxury-gold transition-colors p-1"
                   aria-label="Account menu"
                   aria-expanded={accountOpen}
                 >
@@ -198,7 +196,7 @@ export default function Navigation({ onCartOpen }: NavigationProps) {
             <button
               type="button"
               onClick={onCartOpen}
-              className="relative text-luxury-beige/70 hover:text-luxury-gold transition-colors p-1"
+              className="relative text-luxury-beige/80 hover:text-luxury-gold transition-colors p-1"
               aria-label={`Open cart${totalItems > 0 ? `, ${totalItems} items` : ""}`}
             >
               <ShoppingBag className="w-5 h-5" />
@@ -209,18 +207,30 @@ export default function Navigation({ onCartOpen }: NavigationProps) {
               )}
             </button>
 
-            {/* Mobile Menu Toggle */}
+            {/* Mobile Menu Toggle — bold gold, always visible */}
             <button
               type="button"
-              className="md:hidden text-luxury-beige/70 hover:text-luxury-gold transition-colors p-1"
+              className="md:hidden flex items-center justify-center border-2 transition-colors"
+              style={{
+                color: "oklch(0.78 0.12 80)",
+                borderColor: "oklch(0.78 0.12 80 / 0.6)",
+                backgroundColor: mobileOpen
+                  ? "oklch(0.78 0.12 80 / 0.15)"
+                  : "oklch(0.78 0.12 80 / 0.08)",
+                width: 44,
+                height: 44,
+                minWidth: 44,
+                minHeight: 44,
+              }}
               onClick={() => setMobileOpen((prev) => !prev)}
               aria-label={mobileOpen ? "Close menu" : "Open menu"}
               aria-expanded={mobileOpen}
+              data-ocid="nav.mobile_menu.toggle"
             >
               {mobileOpen ? (
-                <X className="w-5 h-5" />
+                <X className="w-6 h-6" strokeWidth={2.5} />
               ) : (
-                <Menu className="w-5 h-5" />
+                <Menu className="w-6 h-6" strokeWidth={2.5} />
               )}
             </button>
           </div>
@@ -235,7 +245,7 @@ export default function Navigation({ onCartOpen }: NavigationProps) {
               key={link.id}
               type="button"
               onClick={() => scrollToSection(link.id)}
-              className="block w-full text-left font-sans text-sm tracking-widest uppercase text-luxury-beige/70 hover:text-luxury-gold transition-colors py-2"
+              className="block w-full text-left font-sans text-sm tracking-widest uppercase text-luxury-beige/80 hover:text-luxury-gold transition-colors py-2"
             >
               {link.label}
             </button>
@@ -243,14 +253,14 @@ export default function Navigation({ onCartOpen }: NavigationProps) {
           <a
             href="/about"
             onClick={() => setMobileOpen(false)}
-            className="block font-sans text-sm tracking-widest uppercase text-luxury-beige/70 hover:text-luxury-gold transition-colors py-2"
+            className="block font-sans text-sm tracking-widest uppercase text-luxury-beige/80 hover:text-luxury-gold transition-colors py-2"
           >
             Our Story
           </a>
           <a
             href="/track"
             onClick={() => setMobileOpen(false)}
-            className="block font-sans text-sm tracking-widest uppercase text-luxury-beige/70 hover:text-luxury-gold transition-colors py-2"
+            className="block font-sans text-sm tracking-widests uppercase text-luxury-beige/80 hover:text-luxury-gold transition-colors py-2"
           >
             Track Order
           </a>
@@ -263,7 +273,7 @@ export default function Navigation({ onCartOpen }: NavigationProps) {
                   login();
                 }}
                 disabled={isLoggingIn || isInitializing}
-                className="flex items-center gap-2 w-full font-sans text-sm tracking-widest uppercase text-luxury-gold/70 hover:text-luxury-gold py-2 disabled:opacity-40"
+                className="flex items-center gap-2 w-full font-sans text-sm tracking-widest uppercase text-luxury-gold/80 hover:text-luxury-gold py-2 disabled:opacity-40"
               >
                 <LogIn className="w-4 h-4" />
                 Sign In
@@ -283,7 +293,7 @@ export default function Navigation({ onCartOpen }: NavigationProps) {
                 <a
                   href="/track"
                   onClick={() => setMobileOpen(false)}
-                  className="flex items-center gap-2 font-sans text-sm tracking-widest uppercase text-luxury-gold/70 hover:text-luxury-gold py-2"
+                  className="flex items-center gap-2 font-sans text-sm tracking-widest uppercase text-luxury-gold/80 hover:text-luxury-gold py-2"
                 >
                   <Package className="w-4 h-4" />
                   My Orders
@@ -294,7 +304,7 @@ export default function Navigation({ onCartOpen }: NavigationProps) {
                     setMobileOpen(false);
                     clear();
                   }}
-                  className="flex items-center gap-2 w-full font-sans text-sm tracking-widest uppercase text-luxury-beige/50 hover:text-luxury-gold py-2"
+                  className="flex items-center gap-2 w-full font-sans text-sm tracking-widest uppercase text-luxury-beige/60 hover:text-luxury-gold py-2"
                 >
                   <LogOut className="w-4 h-4" />
                   Sign Out
@@ -305,20 +315,19 @@ export default function Navigation({ onCartOpen }: NavigationProps) {
               href="https://instagram.com/miss.luxeco"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 w-full font-sans text-sm tracking-widest uppercase text-luxury-beige/70 hover:text-luxury-gold transition-colors py-2"
+              className="flex items-center gap-2 w-full font-sans text-sm tracking-widest uppercase text-luxury-beige/80 hover:text-luxury-gold transition-colors py-2"
               onClick={() => setMobileOpen(false)}
             >
-              <span className="w-4 h-4 flex items-center justify-center">
-                <SiInstagram size={16} />
-              </span>
+              <SiInstagram size={16} />
               Instagram
             </a>
             <a
-              href={`https://wa.me/917045899262?text=${encodeURIComponent("Hello Miss Luxe! 🌹✨\n\nI'd like to place an order. Could you please help me?")}`}
+              href={ORDER_WA_HREF}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-gold block text-center py-3 text-sm"
               onClick={() => setMobileOpen(false)}
+              data-ocid="nav.whatsapp_order.button"
+              className="btn-gold block w-full text-center py-3 text-sm no-underline"
             >
               Order Now
             </a>

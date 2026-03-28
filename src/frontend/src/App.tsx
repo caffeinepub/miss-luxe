@@ -41,7 +41,7 @@ function HomePage() {
         <RamadanEidBanner />
         <HeroSection />
         <AboutSection />
-        <ProductsSection />
+        <ProductsSection onCartOpen={() => setCartOpen(true)} />
         <FlavourSection />
         <GiftSection />
         <InstagramSection />

@@ -56,6 +56,7 @@ export default function CartPage() {
   });
 
   const [errors, setErrors] = useState<Partial<CustomerForm>>({});
+  const [checkoutHref, setCheckoutHref] = useState<string>("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -128,11 +129,9 @@ export default function CartPage() {
       .filter((l): l is string => l !== null)
       .join("\n");
 
-    const link = document.createElement("a");
-    link.href = `https://wa.me/917045899262?text=${encodeURIComponent(message)}`;
-    link.target = "_blank";
-    link.rel = "noopener noreferrer";
-    link.click();
+    setCheckoutHref(
+      `https://wa.me/917045899262?text=${encodeURIComponent(message)}`,
+    );
   };
 
   return (
@@ -493,29 +492,55 @@ export default function CartPage() {
                     </p>
                   </div>
 
-                  <button
-                    type="button"
-                    onClick={handleWhatsAppOrder}
-                    className="w-full flex items-center justify-center gap-3 py-4 font-sans text-sm font-semibold tracking-widest uppercase text-white transition-all duration-300"
-                    style={{ backgroundColor: "oklch(0.52 0.17 145)" }}
-                    onMouseEnter={(e) => {
-                      (e.currentTarget as HTMLElement).style.backgroundColor =
-                        "oklch(0.45 0.17 145)";
-                    }}
-                    onMouseLeave={(e) => {
-                      (e.currentTarget as HTMLElement).style.backgroundColor =
-                        "oklch(0.52 0.17 145)";
-                    }}
-                  >
-                    <span className="w-5 h-5 flex items-center justify-center flex-shrink-0">
-                      <SiWhatsapp size={20} />
-                    </span>
-                    Place Order via WhatsApp
-                  </button>
+                  {checkoutHref ? (
+                    <a
+                      href={checkoutHref}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      data-ocid="cart.whatsapp_checkout.button"
+                      className="w-full flex items-center justify-center gap-3 py-4 font-sans text-sm font-semibold tracking-widest uppercase text-white transition-all duration-300 no-underline"
+                      style={{ backgroundColor: "oklch(0.52 0.17 145)" }}
+                      onMouseEnter={(e) => {
+                        (e.currentTarget as HTMLElement).style.backgroundColor =
+                          "oklch(0.45 0.17 145)";
+                      }}
+                      onMouseLeave={(e) => {
+                        (e.currentTarget as HTMLElement).style.backgroundColor =
+                          "oklch(0.52 0.17 145)";
+                      }}
+                    >
+                      <span className="w-5 h-5 flex items-center justify-center flex-shrink-0">
+                        <SiWhatsapp size={20} />
+                      </span>
+                      Tap to Open WhatsApp
+                    </a>
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={handleWhatsAppOrder}
+                      data-ocid="cart.place_order.button"
+                      className="w-full flex items-center justify-center gap-3 py-4 font-sans text-sm font-semibold tracking-widest uppercase text-white transition-all duration-300"
+                      style={{ backgroundColor: "oklch(0.52 0.17 145)" }}
+                      onMouseEnter={(e) => {
+                        (e.currentTarget as HTMLElement).style.backgroundColor =
+                          "oklch(0.45 0.17 145)";
+                      }}
+                      onMouseLeave={(e) => {
+                        (e.currentTarget as HTMLElement).style.backgroundColor =
+                          "oklch(0.52 0.17 145)";
+                      }}
+                    >
+                      <span className="w-5 h-5 flex items-center justify-center flex-shrink-0">
+                        <SiWhatsapp size={20} />
+                      </span>
+                      Place Order via WhatsApp
+                    </button>
+                  )}
 
                   <p className="font-sans text-luxury-beige/30 text-xs text-center mt-4">
-                    You will be redirected to WhatsApp to confirm your prepaid
-                    order
+                    {checkoutHref
+                      ? "Your order is ready — tap the button above to confirm on WhatsApp."
+                      : "You will be redirected to WhatsApp to confirm your prepaid order"}
                   </p>
 
                   <div className="mt-6 pt-6 border-t border-luxury-gold/10 text-center">

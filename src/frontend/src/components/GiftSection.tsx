@@ -30,7 +30,8 @@ export default function GiftSection() {
             href={`https://wa.me/917045899262?text=${encodeURIComponent("Hello Miss Luxe! 🌹✨\n\nI'm interested in your luxury gift collections. Could you share details on what's available?\n\nThank you!")}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="btn-gold px-10 py-3 text-sm tracking-widest"
+            data-ocid="gifts.shop_gift_sets.button"
+            className="btn-gold px-10 py-3 text-sm tracking-widest cursor-pointer no-underline inline-block"
           >
             Shop Gift Sets
           </a>
@@ -112,10 +113,24 @@ export default function GiftSection() {
                 </ul>
                 <div className="flex items-center justify-between">
                   <div>
-                    <span className="font-display text-2xl text-luxury-gold font-bold">
-                      ₹{bundle.price.toLocaleString("en-IN")}
+                    <span className="inline-flex items-center gap-1 bg-luxury-gold/15 border border-luxury-gold/35 text-luxury-gold text-[9px] font-sans font-bold uppercase tracking-[0.2em] px-2 py-0.5 mb-1.5">
+                      ✦ {bundle.offerLabel}
                     </span>
-                    <span className="font-sans text-luxury-beige/40 text-xs ml-2">
+                    <div className="flex items-baseline gap-2.5">
+                      <span className="font-display text-2xl text-luxury-gold font-bold">
+                        ₹{bundle.price.toLocaleString("en-IN")}
+                      </span>
+                      <span className="font-display text-base text-luxury-beige/30 line-through">
+                        ₹{bundle.originalPrice.toLocaleString("en-IN")}
+                      </span>
+                    </div>
+                    <p className="font-sans text-luxury-gold/60 text-[10px] mt-0.5">
+                      Save ₹
+                      {(bundle.originalPrice - bundle.price).toLocaleString(
+                        "en-IN",
+                      )}
+                    </p>
+                    <span className="font-sans text-luxury-beige/40 text-xs">
                       {bundle.pieces} pieces
                     </span>
                   </div>
@@ -123,7 +138,8 @@ export default function GiftSection() {
                     href={`https://wa.me/917045899262?text=${encodeURIComponent(`Hello Miss Luxe! 🌹✨\n\nI'd like to order the *${bundle.name}* (${bundle.pieces} pieces) at ₹${bundle.price.toLocaleString("en-IN")}.\n\n*Payment Mode: Prepaid*\n\nKindly share your UPI details and confirm availability.\n\nThank you! 🌸`)}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="btn-gold px-4 py-2 text-xs tracking-widest"
+                    data-ocid={`gift.order.button.${bundle.id}`}
+                    className="btn-gold px-4 py-2 text-xs tracking-widest cursor-pointer no-underline inline-block"
                   >
                     Order Now
                   </a>

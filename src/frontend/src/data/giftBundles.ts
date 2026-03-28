@@ -2,6 +2,8 @@ export interface GiftBundle {
   id: string;
   name: string;
   price: number;
+  originalPrice: number;
+  offerLabel: string;
   pieces: number;
   description: string;
   highlights: string[];
@@ -15,6 +17,8 @@ export const giftBundles: GiftBundle[] = [
     id: "signature-luxe-box",
     name: "Signature Luxe Box",
     price: 399,
+    originalPrice: 799,
+    offerLabel: "Founder's Price",
     pieces: 6,
     description:
       "Six hand-crafted Medjool date chocolates, each filled with a signature Miss Luxe flavour and finished with 24K edible gold leaf. Presented in our iconic black lacquer box — elegant enough to give, indulgent enough to keep.",
@@ -33,6 +37,8 @@ export const giftBundles: GiftBundle[] = [
     id: "grand-luxe-box",
     name: "Grand Luxe Box",
     price: 699,
+    originalPrice: 1299,
+    offerLabel: "Launch Offer",
     pieces: 12,
     description:
       "Twelve exquisite date chocolates, each a distinct flavour story — pistachio, rose, saffron, dark chocolate velvet, and more. Arranged in a royal two-tier presentation box with gold foil stamping, satin ribbon, and embossed wax seal. Our most beloved gifting choice for engagements, Eid, and birthdays.",
@@ -52,6 +58,8 @@ export const giftBundles: GiftBundle[] = [
     id: "royal-collector-box",
     name: "Royal Collector Box",
     price: 1199,
+    originalPrice: 1999,
+    offerLabel: "Exclusive Offer",
     pieces: 18,
     description:
       "The pinnacle of the Miss Luxe collection. Eighteen hand-crafted masterpieces representing our complete flavour repertoire, encased in a hand-lacquered black velvet box with gold embossed crest, silk lining, and brass clasps. Produced in limited batches. For weddings, landmark anniversaries, and gestures that leave no room for doubt.",

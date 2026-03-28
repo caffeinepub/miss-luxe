@@ -1,15 +1,26 @@
 import { X } from "lucide-react";
 import { useEffect, useState } from "react";
 
-// Versioned key — changing this resets dismissal for a new season
 const DISMISSED_KEY = "miss-luxe-ramadan-2026-dismissed";
 
-const WA_HREF =
-  "https://wa.me/917045899262?text=Ramadan%202026%20%26%20Eid%20Special%20Gifting%20-%20I%27d%20like%20to%20order%20from%20Miss%20Luxe";
+const WA_HREF = `https://wa.me/917045899262?text=${encodeURIComponent(
+  [
+    "Hello Miss Luxe! 🌹✨",
+    "",
+    "*Ramadan & Eid Special Gifting*",
+    "",
+    "I'd love to explore your luxury date chocolate collection as a gift for this blessed season.",
+    "",
+    "Could you please share the available boxes and pricing?",
+    "",
+    "*Payment Mode: Prepaid*",
+    "",
+    "Thank you! 🌙",
+  ].join("\n"),
+)}`;
 
 type SvgProps = { className?: string; style?: React.CSSProperties };
 
-// Crescent Moon SVG
 function CrescentMoon({ className, style }: SvgProps) {
   return (
     <svg
@@ -24,7 +35,6 @@ function CrescentMoon({ className, style }: SvgProps) {
   );
 }
 
-// Eight-pointed star / sparkle SVG
 function StarOrnament({ className, style }: SvgProps) {
   return (
     <svg
@@ -39,7 +49,6 @@ function StarOrnament({ className, style }: SvgProps) {
   );
 }
 
-// Small diamond sparkle
 function DiamondSparkle({ className, style }: SvgProps) {
   return (
     <svg
@@ -55,7 +64,7 @@ function DiamondSparkle({ className, style }: SvgProps) {
 }
 
 export default function RamadanEidBanner() {
-  const [dismissed, setDismissed] = useState(true); // start hidden to avoid flash
+  const [dismissed, setDismissed] = useState(true);
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -83,7 +92,6 @@ export default function RamadanEidBanner() {
       role="banner"
       aria-label="Ramadan & Eid Special Offer"
     >
-      {/* Shimmer sweep animation */}
       <div
         className="pointer-events-none absolute inset-0"
         style={{
@@ -94,7 +102,6 @@ export default function RamadanEidBanner() {
         }}
       />
 
-      {/* Decorative lantern-glow blobs */}
       <div
         className="pointer-events-none absolute left-0 top-0 h-full w-32 opacity-20"
         style={{
@@ -110,10 +117,8 @@ export default function RamadanEidBanner() {
         }}
       />
 
-      {/* Content */}
       <div className="relative mx-auto max-w-6xl px-6 py-3 pr-14">
         <div className="flex flex-col items-center gap-1.5 sm:flex-row sm:justify-center sm:gap-4 sm:py-1">
-          {/* Left ornaments */}
           <div
             className="hidden items-center gap-1.5 sm:flex"
             aria-hidden="true"
@@ -142,9 +147,7 @@ export default function RamadanEidBanner() {
             />
           </div>
 
-          {/* Text content */}
           <div className="flex flex-col items-center gap-0.5 text-center sm:flex-row sm:gap-3">
-            {/* Mobile: crescent + star inline */}
             <div
               className="flex items-center gap-2 sm:hidden"
               aria-hidden="true"
@@ -158,7 +161,6 @@ export default function RamadanEidBanner() {
                 style={{ color: "oklch(0.78 0.12 80)" }}
               />
             </div>
-
             <p
               className="font-serif text-sm font-semibold tracking-wide sm:text-base"
               style={{
@@ -181,14 +183,12 @@ export default function RamadanEidBanner() {
                 Gift the Luxury of Miss Luxe
               </span>
             </p>
-
             <span
               className="hidden font-sans text-xs sm:inline"
               style={{ color: "oklch(0.78 0.12 80 / 0.5)" }}
             >
               ·
             </span>
-
             <p
               className="font-sans text-xs tracking-wide"
               style={{ color: "oklch(0.92 0.02 80 / 0.65)" }}
@@ -198,7 +198,6 @@ export default function RamadanEidBanner() {
             </p>
           </div>
 
-          {/* Right ornaments */}
           <div
             className="hidden items-center gap-1.5 sm:flex"
             aria-hidden="true"
@@ -228,30 +227,17 @@ export default function RamadanEidBanner() {
             />
           </div>
 
-          {/* CTA button */}
           <a
             data-ocid="banner.primary_button"
             href={WA_HREF}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-1 shrink-0 px-4 py-1.5 font-sans text-xs font-semibold uppercase tracking-widest transition-all duration-300 sm:mt-0"
+            className="mt-1 shrink-0 px-4 py-1.5 font-sans text-xs font-semibold uppercase tracking-widest transition-all duration-300 hover:opacity-90 sm:mt-0"
             style={{
               background: "oklch(0.78 0.12 80)",
               color: "oklch(0.08 0.005 60)",
               borderRadius: "1px",
               letterSpacing: "0.12em",
-            }}
-            onClick={(e) => {
-              e.preventDefault();
-              window.open(WA_HREF, "_blank", "noopener,noreferrer");
-            }}
-            onMouseEnter={(e) => {
-              (e.currentTarget as HTMLAnchorElement).style.background =
-                "oklch(0.92 0.02 80)";
-            }}
-            onMouseLeave={(e) => {
-              (e.currentTarget as HTMLAnchorElement).style.background =
-                "oklch(0.78 0.12 80)";
             }}
           >
             Order on WhatsApp
@@ -259,29 +245,17 @@ export default function RamadanEidBanner() {
         </div>
       </div>
 
-      {/* Close button */}
       <button
         type="button"
         data-ocid="banner.close_button"
         onClick={handleDismiss}
         className="absolute right-3 top-1/2 -translate-y-1/2 rounded-sm p-1 transition-colors duration-200"
-        style={{
-          color: "oklch(0.78 0.12 80 / 0.6)",
-        }}
+        style={{ color: "oklch(0.78 0.12 80 / 0.6)" }}
         aria-label="Dismiss Ramadan Eid banner"
-        onMouseEnter={(e) => {
-          (e.currentTarget as HTMLButtonElement).style.color =
-            "oklch(0.78 0.12 80)";
-        }}
-        onMouseLeave={(e) => {
-          (e.currentTarget as HTMLButtonElement).style.color =
-            "oklch(0.78 0.12 80 / 0.6)";
-        }}
       >
         <X size={14} strokeWidth={2} />
       </button>
 
-      {/* Keyframe styles */}
       <style>{`
         @keyframes banner-shimmer {
           0% { background-position: -100% 0; }
