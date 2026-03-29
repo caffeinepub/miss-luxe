@@ -212,8 +212,6 @@ export default function CartDrawer({ open, onClose }: CartDrawerProps) {
             </div>
             <a
               href={buildWhatsAppHref()}
-              target="_blank"
-              rel="noopener noreferrer"
               data-ocid="cart.whatsapp_checkout.button"
               className="btn-gold w-full py-4 text-center relative overflow-hidden group/btn tracking-[0.25em] text-sm no-underline block transition-all duration-300 ease-out hover:-translate-y-0.5 hover:shadow-lg hover:shadow-[0_4px_20px_rgba(212,175,55,0.3)] active:scale-95 active:translate-y-0"
             >

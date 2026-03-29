@@ -97,7 +97,7 @@ function OrderRow({ order, onToggleStatus, isUpdating }: OrderRowProps) {
         </span>
       </td>
       <td className="px-5 py-4">
-        <p className="font-sans text-luxury-beige text-sm">{order.itemName}</p>
+        <p className="font-sans text-luxury-beige text-sm">{order.items}</p>
       </td>
       <td className="px-5 py-4 text-center">
         <span className="font-sans text-luxury-beige/70 text-sm">
@@ -184,7 +184,7 @@ export default function AdminDashboard() {
       newStatus: OrderStatus;
     }) => {
       if (!actor) throw new Error("Actor not ready");
-      await actor.updateSingleOrder(orderId, newStatus);
+      await actor.updateOrderStatus(orderId, newStatus);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["allOrders"] });

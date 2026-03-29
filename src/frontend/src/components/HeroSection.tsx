@@ -1,15 +1,14 @@
 import { useEffect, useRef } from "react";
 
-const IMG_FALLBACK_HANDLER = (e: React.SyntheticEvent<HTMLImageElement>) => {
+const handleImgError = (e: React.SyntheticEvent<HTMLImageElement>) => {
   const img = e.currentTarget;
   img.style.display = "none";
   const parent = img.parentElement;
   if (parent && !parent.querySelector(".img-fallback")) {
     const fallback = document.createElement("div");
-    fallback.className =
-      "img-fallback w-full h-full bg-gradient-to-br from-zinc-900 via-black to-amber-950";
-    fallback.style.position = "absolute";
-    fallback.style.inset = "0";
+    fallback.className = "img-fallback absolute inset-0";
+    fallback.style.background =
+      "linear-gradient(135deg, oklch(0.10 0.007 60) 0%, oklch(0.12 0.015 70) 40%, oklch(0.08 0.005 60) 100%)";
     parent.appendChild(fallback);
   }
 };
@@ -40,14 +39,15 @@ export default function HeroSection() {
   return (
     <section className="relative h-screen min-h-[640px] overflow-hidden flex items-center justify-center">
       <div ref={heroRef} className="absolute inset-0 will-change-transform">
+        {/* Always-visible gradient base */}
         <div className="absolute inset-0 bg-gradient-to-br from-zinc-900 via-black to-amber-950" />
         <img
           src="/assets/generated/hero-banner.dim_1600x900.jpg"
           alt="Miss Luxe luxury chocolate dates"
-          className="w-full h-full object-cover relative z-[1]"
+          className="absolute inset-0 w-full h-full object-cover z-[1]"
           loading="eager"
           decoding="async"
-          onError={IMG_FALLBACK_HANDLER}
+          onError={handleImgError}
         />
       </div>
 
@@ -89,16 +89,15 @@ export default function HeroSection() {
           <button
             type="button"
             onClick={scrollToProducts}
-            className="btn-gold px-12 py-4 text-sm tracking-[0.25em]"
+            className="btn-gold px-12 py-4 text-sm tracking-[0.25em] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_4px_20px_rgba(212,175,55,0.4)] active:scale-95"
           >
             Explore Collection
           </button>
+          {/* Order on WhatsApp — direct href, no target=_blank */}
           <a
             href={WA_HREF}
-            target="_blank"
-            rel="noopener noreferrer"
             data-ocid="hero.whatsapp.button"
-            className="border border-luxury-gold/60 text-luxury-gold hover:bg-luxury-gold/10 transition-all duration-300 px-12 py-4 text-sm tracking-[0.25em] font-sans uppercase text-center no-underline inline-block"
+            className="border border-luxury-gold/60 text-luxury-gold hover:bg-luxury-gold/10 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_4px_20px_rgba(212,175,55,0.25)] active:scale-95 px-12 py-4 text-sm tracking-[0.25em] font-sans uppercase text-center no-underline inline-block"
           >
             Order on WhatsApp
           </a>

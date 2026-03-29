@@ -8,10 +8,6 @@ export default function FloatingWhatsAppButton() {
   return (
     <a
       href={WA_URL}
-      onClick={(e) => {
-        e.preventDefault();
-        window.location.href = WA_URL;
-      }}
       data-ocid="floating.whatsapp.button"
       aria-label="Chat with Miss Luxe on WhatsApp"
       className="fixed bottom-6 right-6 z-40 w-14 h-14 flex items-center justify-center rounded-full shadow-lg transition-all duration-300 hover:scale-110 cursor-pointer"

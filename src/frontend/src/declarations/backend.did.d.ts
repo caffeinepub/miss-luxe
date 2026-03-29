@@ -17,23 +17,28 @@ export interface Address {
   'zipCode' : string,
   'phone' : string,
 }
-export interface CustomerProfile {
+export interface Order {
+  'id' : bigint,
+  'customerName' : string,
+  'status' : OrderStatus,
+  'principal' : Principal,
+  'createdAt' : Time,
+  'totalAmount' : bigint,
+  'quantity' : bigint,
+  'items' : string,
+  'phoneNumber' : string,
+}
+export type OrderStatus = { 'DISPATCHED' : null } |
+  { 'PACKED' : null } |
+  { 'PENDING' : null } |
+  { 'DELIVERED' : null } |
+  { 'CONFIRMED' : null };
+export type Time = bigint;
+export interface UserProfile {
   'primaryName' : string,
   'primaryEmail' : string,
   'primaryPhone' : string,
 }
-export interface Order {
-  'id' : bigint,
-  'status' : OrderStatus,
-  'principal' : Principal,
-  'createdAt' : Time,
-  'itemName' : string,
-  'quantity' : bigint,
-}
-export type OrderStatus = { 'PENDING' : null } |
-  { 'DELIVERED' : null };
-export interface OrderUpdate { 'orderId' : bigint, 'newStatus' : OrderStatus }
-export type Time = bigint;
 export type UserRole = { 'admin' : null } |
   { 'user' : null } |
   { 'guest' : null };
@@ -72,20 +77,18 @@ export interface _SERVICE {
   'assignCallerUserRole' : ActorMethod<[Principal, UserRole], undefined>,
   'getAddress' : ActorMethod<[string], [] | [Address]>,
   'getAllOrders' : ActorMethod<[], Array<Order>>,
+  'getCallerUserProfile' : ActorMethod<[], [] | [UserProfile]>,
   'getCallerUserRole' : ActorMethod<[], UserRole>,
   'getMyOrders' : ActorMethod<[], Array<Order>>,
-  'getMyProfile' : ActorMethod<[], [] | [CustomerProfile]>,
-  'getOrderStatus' : ActorMethod<[bigint], [] | [OrderStatus]>,
-  'getProfile' : ActorMethod<[Principal], [] | [CustomerProfile]>,
+  'getMyProfile' : ActorMethod<[], [] | [UserProfile]>,
+  'getOrderStatus' : ActorMethod<[bigint], OrderStatus>,
+  'getProfile' : ActorMethod<[Principal], [] | [UserProfile]>,
+  'getUserProfile' : ActorMethod<[Principal], [] | [UserProfile]>,
   'isCallerAdmin' : ActorMethod<[], boolean>,
+  'saveCallerUserProfile' : ActorMethod<[UserProfile], undefined>,
   'saveProfile' : ActorMethod<[string, string, string], undefined>,
-  'submitOrder' : ActorMethod<[string, bigint], bigint>,
-  'updateAddress' : ActorMethod<
-    [string, string, string, string, string, string],
-    undefined
-  >,
-  'updateOrderStatuses' : ActorMethod<[Array<OrderUpdate>], undefined>,
-  'updateSingleOrder' : ActorMethod<[bigint, OrderStatus], undefined>,
+  'submitOrder' : ActorMethod<[string, string, string, bigint, bigint], bigint>,
+  'updateOrderStatus' : ActorMethod<[bigint, OrderStatus], undefined>,
 }
 export declare const idlService: IDL.ServiceClass;
 export declare const idlInitArgs: IDL.Type[];

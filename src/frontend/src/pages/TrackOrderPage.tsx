@@ -16,9 +16,6 @@ import Navigation from "../components/Navigation";
 import { useInternetIdentity } from "../hooks/useInternetIdentity";
 import { useGetMyOrders } from "../hooks/useQueries";
 
-// Maps backend status to display steps
-// Backend: PENDING | DELIVERED
-// Display: Confirmed → Packed → Dispatched → Delivered
 const STEPS = [
   { key: "confirmed", label: "Confirmed", icon: CheckCircle },
   { key: "packed", label: "Packed", icon: Package },
@@ -28,7 +25,6 @@ const STEPS = [
 
 function getActiveStepIndex(status: OrderStatus): number {
   if (status === OrderStatus.DELIVERED) return 3;
-  // PENDING = Confirmed only
   return 0;
 }
 
@@ -56,7 +52,6 @@ function StatusTracker({ status }: { status: OrderStatus }) {
 
         return (
           <div key={step.key} className="flex items-center flex-1 min-w-0">
-            {/* Step */}
             <div className="flex flex-col items-center gap-2 shrink-0">
               <div
                 className={`w-9 h-9 rounded-full flex items-center justify-center border-2 transition-all duration-300 shrink-0 ${
@@ -77,7 +72,6 @@ function StatusTracker({ status }: { status: OrderStatus }) {
                 {step.label}
               </span>
             </div>
-            {/* Connector */}
             {!isLast && (
               <div
                 className={`flex-1 h-px mx-2 transition-all duration-300 ${
@@ -219,7 +213,7 @@ export default function TrackOrderPage() {
                             Order #{String(order.id)}
                           </p>
                           <h3 className="font-serif text-luxury-beige text-xl">
-                            {order.itemName}
+                            {order.items}
                           </h3>
                           <p className="font-sans text-luxury-beige/40 text-xs mt-1">
                             Placed on {formatDate(order.createdAt)} · Qty:{" "}
@@ -256,8 +250,6 @@ export default function TrackOrderPage() {
               For order queries, reach us on{" "}
               <a
                 href={`https://wa.me/917045899262?text=${encodeURIComponent("Hello Miss Luxe! 🌹\n\nI have a query regarding my order. Could you please help me?")}`}
-                target="_blank"
-                rel="noopener noreferrer"
                 className="text-luxury-gold/60 hover:text-luxury-gold transition-colors"
               >
                 WhatsApp

@@ -107,7 +107,7 @@ export default function Navigation({ onCartOpen }: NavigationProps) {
             ))}
             <a
               href="/about"
-              className="nav-link font-sans text-sm tracking-widest uppercase text-luxury-beige/80 hover:text-luxury-gold transition-colors"
+              className="nav-link font-sans text-sm tracking-widests uppercase text-luxury-beige/80 hover:text-luxury-gold transition-colors"
             >
               Our Story
             </a>
@@ -260,7 +260,7 @@ export default function Navigation({ onCartOpen }: NavigationProps) {
           <a
             href="/track"
             onClick={() => setMobileOpen(false)}
-            className="block font-sans text-sm tracking-widests uppercase text-luxury-beige/80 hover:text-luxury-gold transition-colors py-2"
+            className="block font-sans text-sm tracking-widest uppercase text-luxury-beige/80 hover:text-luxury-gold transition-colors py-2"
           >
             Track Order
           </a>
@@ -321,10 +321,9 @@ export default function Navigation({ onCartOpen }: NavigationProps) {
               <SiInstagram size={16} />
               Instagram
             </a>
+            {/* Order Now — direct href, no target=_blank (ICP blocks popups) */}
             <a
               href={ORDER_WA_HREF}
-              target="_blank"
-              rel="noopener noreferrer"
               onClick={() => setMobileOpen(false)}
               data-ocid="nav.whatsapp_order.button"
               className="btn-gold block w-full text-center py-3 text-sm no-underline"

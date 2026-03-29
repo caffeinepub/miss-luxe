@@ -32,26 +32,28 @@ export const Address = IDL.Record({
   'phone' : IDL.Text,
 });
 export const OrderStatus = IDL.Variant({
+  'DISPATCHED' : IDL.Null,
+  'PACKED' : IDL.Null,
   'PENDING' : IDL.Null,
   'DELIVERED' : IDL.Null,
+  'CONFIRMED' : IDL.Null,
 });
 export const Time = IDL.Int;
 export const Order = IDL.Record({
   'id' : IDL.Nat,
+  'customerName' : IDL.Text,
   'status' : OrderStatus,
   'principal' : IDL.Principal,
   'createdAt' : Time,
-  'itemName' : IDL.Text,
+  'totalAmount' : IDL.Nat,
   'quantity' : IDL.Nat,
+  'items' : IDL.Text,
+  'phoneNumber' : IDL.Text,
 });
-export const CustomerProfile = IDL.Record({
+export const UserProfile = IDL.Record({
   'primaryName' : IDL.Text,
   'primaryEmail' : IDL.Text,
   'primaryPhone' : IDL.Text,
-});
-export const OrderUpdate = IDL.Record({
-  'orderId' : IDL.Nat,
-  'newStatus' : OrderStatus,
 });
 
 export const idlService = IDL.Service({
@@ -90,25 +92,26 @@ export const idlService = IDL.Service({
   'assignCallerUserRole' : IDL.Func([IDL.Principal, UserRole], [], []),
   'getAddress' : IDL.Func([IDL.Text], [IDL.Opt(Address)], ['query']),
   'getAllOrders' : IDL.Func([], [IDL.Vec(Order)], ['query']),
+  'getCallerUserProfile' : IDL.Func([], [IDL.Opt(UserProfile)], ['query']),
   'getCallerUserRole' : IDL.Func([], [UserRole], ['query']),
   'getMyOrders' : IDL.Func([], [IDL.Vec(Order)], ['query']),
-  'getMyProfile' : IDL.Func([], [IDL.Opt(CustomerProfile)], ['query']),
-  'getOrderStatus' : IDL.Func([IDL.Nat], [IDL.Opt(OrderStatus)], ['query']),
-  'getProfile' : IDL.Func(
+  'getMyProfile' : IDL.Func([], [IDL.Opt(UserProfile)], ['query']),
+  'getOrderStatus' : IDL.Func([IDL.Nat], [OrderStatus], ['query']),
+  'getProfile' : IDL.Func([IDL.Principal], [IDL.Opt(UserProfile)], ['query']),
+  'getUserProfile' : IDL.Func(
       [IDL.Principal],
-      [IDL.Opt(CustomerProfile)],
+      [IDL.Opt(UserProfile)],
       ['query'],
     ),
   'isCallerAdmin' : IDL.Func([], [IDL.Bool], ['query']),
+  'saveCallerUserProfile' : IDL.Func([UserProfile], [], []),
   'saveProfile' : IDL.Func([IDL.Text, IDL.Text, IDL.Text], [], []),
-  'submitOrder' : IDL.Func([IDL.Text, IDL.Nat], [IDL.Nat], []),
-  'updateAddress' : IDL.Func(
-      [IDL.Text, IDL.Text, IDL.Text, IDL.Text, IDL.Text, IDL.Text],
-      [],
+  'submitOrder' : IDL.Func(
+      [IDL.Text, IDL.Text, IDL.Text, IDL.Nat, IDL.Nat],
+      [IDL.Nat],
       [],
     ),
-  'updateOrderStatuses' : IDL.Func([IDL.Vec(OrderUpdate)], [], []),
-  'updateSingleOrder' : IDL.Func([IDL.Nat, OrderStatus], [], []),
+  'updateOrderStatus' : IDL.Func([IDL.Nat, OrderStatus], [], []),
 });
 
 export const idlInitArgs = [];
@@ -138,26 +141,28 @@ export const idlFactory = ({ IDL }) => {
     'phone' : IDL.Text,
   });
   const OrderStatus = IDL.Variant({
+    'DISPATCHED' : IDL.Null,
+    'PACKED' : IDL.Null,
     'PENDING' : IDL.Null,
     'DELIVERED' : IDL.Null,
+    'CONFIRMED' : IDL.Null,
   });
   const Time = IDL.Int;
   const Order = IDL.Record({
     'id' : IDL.Nat,
+    'customerName' : IDL.Text,
     'status' : OrderStatus,
     'principal' : IDL.Principal,
     'createdAt' : Time,
-    'itemName' : IDL.Text,
+    'totalAmount' : IDL.Nat,
     'quantity' : IDL.Nat,
+    'items' : IDL.Text,
+    'phoneNumber' : IDL.Text,
   });
-  const CustomerProfile = IDL.Record({
+  const UserProfile = IDL.Record({
     'primaryName' : IDL.Text,
     'primaryEmail' : IDL.Text,
     'primaryPhone' : IDL.Text,
-  });
-  const OrderUpdate = IDL.Record({
-    'orderId' : IDL.Nat,
-    'newStatus' : OrderStatus,
   });
   
   return IDL.Service({
@@ -196,25 +201,26 @@ export const idlFactory = ({ IDL }) => {
     'assignCallerUserRole' : IDL.Func([IDL.Principal, UserRole], [], []),
     'getAddress' : IDL.Func([IDL.Text], [IDL.Opt(Address)], ['query']),
     'getAllOrders' : IDL.Func([], [IDL.Vec(Order)], ['query']),
+    'getCallerUserProfile' : IDL.Func([], [IDL.Opt(UserProfile)], ['query']),
     'getCallerUserRole' : IDL.Func([], [UserRole], ['query']),
     'getMyOrders' : IDL.Func([], [IDL.Vec(Order)], ['query']),
-    'getMyProfile' : IDL.Func([], [IDL.Opt(CustomerProfile)], ['query']),
-    'getOrderStatus' : IDL.Func([IDL.Nat], [IDL.Opt(OrderStatus)], ['query']),
-    'getProfile' : IDL.Func(
+    'getMyProfile' : IDL.Func([], [IDL.Opt(UserProfile)], ['query']),
+    'getOrderStatus' : IDL.Func([IDL.Nat], [OrderStatus], ['query']),
+    'getProfile' : IDL.Func([IDL.Principal], [IDL.Opt(UserProfile)], ['query']),
+    'getUserProfile' : IDL.Func(
         [IDL.Principal],
-        [IDL.Opt(CustomerProfile)],
+        [IDL.Opt(UserProfile)],
         ['query'],
       ),
     'isCallerAdmin' : IDL.Func([], [IDL.Bool], ['query']),
+    'saveCallerUserProfile' : IDL.Func([UserProfile], [], []),
     'saveProfile' : IDL.Func([IDL.Text, IDL.Text, IDL.Text], [], []),
-    'submitOrder' : IDL.Func([IDL.Text, IDL.Nat], [IDL.Nat], []),
-    'updateAddress' : IDL.Func(
-        [IDL.Text, IDL.Text, IDL.Text, IDL.Text, IDL.Text, IDL.Text],
-        [],
+    'submitOrder' : IDL.Func(
+        [IDL.Text, IDL.Text, IDL.Text, IDL.Nat, IDL.Nat],
+        [IDL.Nat],
         [],
       ),
-    'updateOrderStatuses' : IDL.Func([IDL.Vec(OrderUpdate)], [], []),
-    'updateSingleOrder' : IDL.Func([IDL.Nat, OrderStatus], [], []),
+    'updateOrderStatus' : IDL.Func([IDL.Nat, OrderStatus], [], []),
   });
 };
 

@@ -352,8 +352,6 @@ export default function ProductDetailPage({
                   </button>
                   <a
                     href={buildWhatsAppHref()}
-                    target="_blank"
-                    rel="noopener noreferrer"
                     data-ocid="product_detail.whatsapp.button"
                     className="flex items-center justify-center gap-2 py-4 px-8 text-xs font-medium tracking-widest uppercase transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-[0_4px_16px_rgba(37,211,102,0.3)] active:scale-95 flex-1 text-white cursor-pointer no-underline"
                     style={{ backgroundColor: "oklch(0.52 0.17 145)" }}

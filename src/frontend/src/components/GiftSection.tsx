@@ -28,8 +28,6 @@ export default function GiftSection() {
           <div className="w-16 h-px bg-luxury-gold mx-auto mb-6" />
           <a
             href={`https://wa.me/917045899262?text=${encodeURIComponent("Hello Miss Luxe! 🌹✨\n\nI'm interested in your luxury gift collections. Could you share details on what's available?\n\nThank you!")}`}
-            target="_blank"
-            rel="noopener noreferrer"
             data-ocid="gifts.shop_gift_sets.button"
             className="btn-gold px-10 py-3 text-sm tracking-widest cursor-pointer no-underline inline-block"
           >
@@ -136,8 +134,6 @@ export default function GiftSection() {
                   </div>
                   <a
                     href={`https://wa.me/917045899262?text=${encodeURIComponent(`Hello Miss Luxe! 🌹✨\n\nI'd like to order the *${bundle.name}* (${bundle.pieces} pieces) at ₹${bundle.price.toLocaleString("en-IN")}.\n\n*Payment Mode: Prepaid*\n\nKindly share your UPI details and confirm availability.\n\nThank you! 🌸`)}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
                     data-ocid={`gift.order.button.${bundle.id}`}
                     className="btn-gold px-4 py-2 text-xs tracking-widest cursor-pointer no-underline inline-block"
                   >

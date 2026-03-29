@@ -230,8 +230,6 @@ export default function RamadanEidBanner() {
           <a
             data-ocid="banner.primary_button"
             href={WA_HREF}
-            target="_blank"
-            rel="noopener noreferrer"
             className="mt-1 shrink-0 px-4 py-1.5 font-sans text-xs font-semibold uppercase tracking-widest transition-all duration-300 hover:opacity-90 sm:mt-0"
             style={{
               background: "oklch(0.78 0.12 80)",

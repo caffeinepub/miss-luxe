@@ -315,8 +315,6 @@ function HeroProduct({
               </button>
               <a
                 href={waHref}
-                target="_blank"
-                rel="noopener noreferrer"
                 data-ocid="hero.product.whatsapp.button"
                 className="flex items-center justify-center gap-2.5 py-4 px-8 text-xs font-semibold tracking-[0.25em] uppercase flex-1 text-white cursor-pointer no-underline transition-all duration-300 ease-out hover:-translate-y-0.5 hover:shadow-[0_4px_20px_rgba(37,211,102,0.35)] active:scale-95 active:translate-y-0"
                 style={{ backgroundColor: "oklch(0.52 0.17 145)" }}
@@ -502,8 +500,6 @@ function SecondaryProductCard({
           </button>
           <a
             href={waHref}
-            target="_blank"
-            rel="noopener noreferrer"
             data-ocid={`product.whatsapp.button.${index + 1}`}
             className="flex items-center justify-center gap-1.5 py-3 px-4 text-xs font-semibold tracking-[0.2em] uppercase flex-1 text-white cursor-pointer no-underline transition-all duration-300 ease-out hover:-translate-y-0.5 hover:shadow-[0_4px_20px_rgba(37,211,102,0.35)] active:scale-95 active:translate-y-0"
             style={{ backgroundColor: "oklch(0.52 0.17 145)" }}
@@ -634,8 +630,6 @@ export default function ProductsSection({
           </p>
           <a
             href={`https://wa.me/917045899262?text=${encodeURIComponent("Hello Miss Luxe! 🌹✨\n\nI'm interested in ordering a *Custom Box* — a bespoke creation tailored to my preferences.\n\nCould you share more details on customisation options and pricing?\n\nThank you!")}`}
-            target="_blank"
-            rel="noopener noreferrer"
             data-ocid="products.custom_order.button"
             className="btn-gold inline-block px-12 py-4 text-sm tracking-[0.25em] cursor-pointer no-underline transition-all duration-300 ease-out hover:-translate-y-0.5 hover:shadow-lg hover:shadow-[0_4px_20px_rgba(212,175,55,0.3)] active:scale-95 active:translate-y-0"
           >

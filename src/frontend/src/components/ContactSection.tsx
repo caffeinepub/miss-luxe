@@ -107,8 +107,8 @@ export default function ContactSection() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!validate()) return;
-    // Open WhatsApp directly — single step, no second click needed
     const href = buildWhatsAppHref(formData);
+    // Use location.href so it works on ICP (no popup blocking)
     window.location.href = href;
     setSubmitted(true);
   };
@@ -124,6 +124,8 @@ export default function ContactSection() {
 
   const baseInput =
     "w-full bg-transparent border outline-none px-4 py-3.5 font-sans text-luxury-beige text-sm transition-all duration-200 placeholder:text-luxury-beige/30 rounded-none";
+
+  const WA_DIRECT = `https://wa.me/917045899262?text=${encodeURIComponent("Hello Miss Luxe! 🌹\n\nI'd like to get in touch. Could you please help me?")}`;
 
   return (
     <section id="contact" className="py-20 md:py-32 bg-luxury-black">
@@ -345,11 +347,11 @@ export default function ContactSection() {
                 <div className="flex-1 h-px bg-luxury-gold/10" />
               </div>
 
-              {/* Single-step submit — opens WhatsApp instantly */}
+              {/* Single-step submit — opens WhatsApp directly via location.href */}
               <button
                 type="submit"
                 data-ocid="contact.submit_button"
-                className="w-full py-4 text-sm font-sans font-semibold tracking-widest uppercase flex items-center justify-center gap-3 text-white transition-opacity hover:opacity-90"
+                className="w-full py-4 text-sm font-sans font-semibold tracking-widest uppercase flex items-center justify-center gap-3 text-white transition-opacity hover:opacity-90 active:scale-[0.98]"
                 style={{ backgroundColor: "oklch(0.52 0.17 145)" }}
               >
                 {WA_ICON}
@@ -364,11 +366,15 @@ export default function ContactSection() {
 
         {/* Contact info strip */}
         <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {/* WhatsApp — uses window.location.href for ICP compatibility */}
           <a
-            href="https://wa.me/917045899262"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-3 border border-luxury-gold/15 px-5 py-4 hover:border-luxury-gold/35 transition-colors group"
+            href={WA_DIRECT}
+            onClick={(e) => {
+              e.preventDefault();
+              window.location.href = WA_DIRECT;
+            }}
+            className="flex items-center gap-3 border border-luxury-gold/15 px-5 py-4 hover:border-luxury-gold/35 transition-colors group cursor-pointer"
+            data-ocid="contact.whatsapp_strip.button"
           >
             <span style={{ color: "oklch(0.52 0.17 145)" }}>{WA_ICON}</span>
             <div>

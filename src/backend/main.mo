@@ -4,11 +4,13 @@ import Text "mo:core/Text";
 import Time "mo:core/Time";
 import List "mo:core/List";
 import Runtime "mo:core/Runtime";
+import Iter "mo:core/Iter";
 import Principal "mo:core/Principal";
 import MixinStorage "blob-storage/Mixin";
-import Iter "mo:core/Iter";
+
 import AccessControl "authorization/access-control";
 import MixinAuthorization "authorization/MixinAuthorization";
+
 
 actor {
   let accessControlState = AccessControl.initState();
@@ -18,21 +20,27 @@ actor {
   ////////////////////////////////////////////////////
   //// Types
   ////////////////////////////////////////////////////
-  type OrderStatus = {
-    #PENDING;
-    #DELIVERED;
-  };
-
   type Order = {
     id : Nat;
+    customerName : Text;
+    phoneNumber : Text;
     principal : Principal;
-    itemName : Text;
+    items : Text;
     quantity : Nat;
+    totalAmount : Nat;
     status : OrderStatus;
     createdAt : Time.Time;
   };
 
-  type CustomerProfile = {
+  type OrderStatus = {
+    #PENDING;
+    #CONFIRMED;
+    #PACKED;
+    #DISPATCHED;
+    #DELIVERED;
+  };
+
+  public type UserProfile = {
     primaryName : Text;
     primaryPhone : Text;
     primaryEmail : Text;
@@ -46,13 +54,8 @@ actor {
     phone : Text;
   };
 
-  type OrderUpdate = {
-    orderId : Nat;
-    newStatus : OrderStatus;
-  };
-
   let orders = Map.empty<Nat, Order>();
-  let customerProfiles = Map.empty<Principal, CustomerProfile>();
+  let userProfiles = Map.empty<Principal, UserProfile>();
   let addresses = Map.empty<Text, Address>();
 
   var nextOrderId = 0;
@@ -60,8 +63,11 @@ actor {
   ////////////////////////////////////////////////////
   //// Order Management
   ////////////////////////////////////////////////////
+  public shared ({ caller }) func submitOrder(customerName : Text, phone : Text, items : Text, quantity : Nat, totalAmount : Nat) : async Nat {
+    if (not (AccessControl.hasPermission(accessControlState, caller, #user))) {
+      Runtime.trap("Unauthorized: Only users can submit orders");
+    };
 
-  public shared ({ caller }) func submitOrder(itemName : Text, quantity : Nat) : async Nat {
     if (quantity == 0) {
       Runtime.trap("Quantity cannot be zero");
     };
@@ -69,9 +75,12 @@ actor {
     let orderId = nextOrderId;
     let order : Order = {
       id = orderId;
+      customerName;
+      phoneNumber = phone;
       principal = caller;
-      itemName;
+      items;
       quantity;
+      totalAmount;
       status = #PENDING;
       createdAt = Time.now();
     };
@@ -92,71 +101,67 @@ actor {
     ).toArray();
   };
 
-  public shared ({ caller }) func updateOrderStatuses(_updates : [OrderUpdate]) : async () {
-    if (not (AccessControl.hasPermission(accessControlState, caller, #admin))) {
-      Runtime.trap("Unauthorized: Only admins can update orders");
-    };
-
-    let updates = List.fromArray<OrderUpdate>(_updates);
-    updates.forEach(
-      func(update) {
-        switch (orders.get(update.orderId)) {
-          case (null) {};
-          case (?order) {
-            let updatedOrder = { order with status = update.newStatus };
-            orders.add(update.orderId, updatedOrder);
-          };
-        };
-      }
-    );
-  };
-
-  public shared ({ caller }) func updateSingleOrder(_orderId : Nat, _newStatus : OrderStatus) : async () {
-    if (not (AccessControl.hasPermission(accessControlState, caller, #admin))) {
-      Runtime.trap("Unauthorized: Only admins can update orders");
-    };
-    switch (orders.get(_orderId)) {
-      case (null) {};
+  public query ({ caller }) func getOrderStatus(orderId : Nat) : async OrderStatus {
+    switch (orders.get(orderId)) {
+      case (null) {
+        Runtime.trap("Order not found");
+      };
       case (?order) {
-        let updatedOrder = { order with status = _newStatus };
-        orders.add(_orderId, updatedOrder);
+        if (order.principal != caller and not AccessControl.isAdmin(accessControlState, caller)) {
+          Runtime.trap("Unauthorized: Can only check status of your own orders");
+        };
+        order.status;
       };
     };
   };
 
-  public query ({ caller }) func getOrderStatus(orderId : Nat) : async ?OrderStatus {
-    if (not (AccessControl.hasPermission(accessControlState, caller, #user))) {
-      Runtime.trap("Unauthorized: Only users can check order status");
+  public shared ({ caller }) func updateOrderStatus(orderId : Nat, status : OrderStatus) : async () {
+    if (not (AccessControl.hasPermission(accessControlState, caller, #admin))) {
+      Runtime.trap("Unauthorized: Only a site admin can update order status");
     };
     switch (orders.get(orderId)) {
-      case (null) { null };
-      case (?order) { ?order.status };
+      case (null) {
+        Runtime.trap("Order not found");
+      };
+      case (?order) {
+        let updatedOrder = { order with status };
+        orders.add(orderId, updatedOrder);
+      };
     };
   };
 
   public query ({ caller }) func getAllOrders() : async [Order] {
     if (not (AccessControl.hasPermission(accessControlState, caller, #admin))) {
-      Runtime.trap("Unauthorized: Only admins can restrict different logging mechanisms");
+      Runtime.trap("Unauthorized: Only a site admin can view all orders");
     };
     orders.values().toArray();
   };
 
   ////////////////////////////////////////////////////
-  //// Profile Management
+  //// Profile Management (Required Interface)
   ////////////////////////////////////////////////////
 
-  public shared ({ caller }) func saveProfile(fullName : Text, phone : Text, email : Text) : async () {
-    switch (validateProfile(fullName, phone, email)) {
+  public query ({ caller }) func getCallerUserProfile() : async ?UserProfile {
+    if (not (AccessControl.hasPermission(accessControlState, caller, #user))) {
+      Runtime.trap("Unauthorized: Only users can get profiles");
+    };
+    userProfiles.get(caller);
+  };
+
+  public query ({ caller }) func getUserProfile(user : Principal) : async ?UserProfile {
+    if (caller != user and not AccessControl.isAdmin(accessControlState, caller)) {
+      Runtime.trap("Unauthorized: Can only view your own profile");
+    };
+    userProfiles.get(user);
+  };
+
+  public shared ({ caller }) func saveCallerUserProfile(profile : UserProfile) : async () {
+    if (not (AccessControl.hasPermission(accessControlState, caller, #user))) {
+      Runtime.trap("Unauthorized: Only users can save profiles");
+    };
+    switch (validateProfile(profile.primaryName, profile.primaryPhone, profile.primaryEmail)) {
       case (#ok) {
-        if (not (AccessControl.hasPermission(accessControlState, caller, #user))) {
-          Runtime.trap("Unauthorized: Only users can get profiles");
-        };
-        let profile : CustomerProfile = {
-          primaryName = fullName;
-          primaryPhone = phone;
-          primaryEmail = email;
-        };
-        customerProfiles.add(caller, profile);
+        userProfiles.add(caller, profile);
       };
       case (#err(errMsg)) {
         Runtime.trap("Invalid profile: " # errMsg);
@@ -164,23 +169,41 @@ actor {
     };
   };
 
-  public query ({ caller }) func getMyProfile() : async ?CustomerProfile {
+  ////////////////////////////////////////////////////
+  //// Legacy Profile Management (Convenience)
+  ////////////////////////////////////////////////////
+
+  public query ({ caller }) func getMyProfile() : async ?UserProfile {
     if (not (AccessControl.hasPermission(accessControlState, caller, #user))) {
-      Runtime.trap("Unauthorized: Only users can get profiles");
+      Runtime.trap("Unauthorized: Only users can get their profiles");
     };
-    customerProfiles.get(caller);
+    userProfiles.get(caller);
   };
 
-  public query ({ caller }) func getProfile(user : Principal) : async ?CustomerProfile {
+  public query ({ caller }) func getProfile(user : Principal) : async ?UserProfile {
     if (caller != user and not AccessControl.isAdmin(accessControlState, caller)) {
-      switch (customerProfiles.get(caller)) {
-        case (null) {
-          Runtime.trap("Unauthorized: Only users can get profiles");
+      Runtime.trap("Unauthorized: Can only view your own profile");
+    };
+    userProfiles.get(user);
+  };
+
+  public shared ({ caller }) func saveProfile(fullName : Text, phone : Text, email : Text) : async () {
+    if (not (AccessControl.hasPermission(accessControlState, caller, #user))) {
+      Runtime.trap("Unauthorized: Only users can save profiles");
+    };
+    switch (validateProfile(fullName, phone, email)) {
+      case (#ok) {
+        let profile : UserProfile = {
+          primaryName = fullName;
+          primaryPhone = phone;
+          primaryEmail = email;
         };
-        case (?_) {};
+        userProfiles.add(caller, profile);
+      };
+      case (#err(errMsg)) {
+        Runtime.trap("Invalid profile: " # errMsg);
       };
     };
-    customerProfiles.get(user);
   };
 
   ////////////////////////////////////////////////////
@@ -211,25 +234,6 @@ actor {
     addresses.get(addressId);
   };
 
-  public shared ({ caller }) func updateAddress(addressId : Text, street : Text, city : Text, zipCode : Text, country : Text, phone : Text) : async () {
-    if (not (AccessControl.hasPermission(accessControlState, caller, #user))) {
-      Runtime.trap("Unauthorized: Only users can update addresses");
-    };
-
-    if (street.size() == 0 or city.size() == 0 or zipCode.size() == 0 or country.size() == 0 or phone.size() == 0) {
-      Runtime.trap("All address fields must be provided");
-    };
-
-    let address : Address = {
-      street;
-      city;
-      zipCode;
-      country;
-      phone;
-    };
-    addresses.add(addressId, address);
-  };
-
   ////////////////////////////////////////////////////
   //// Validation
   ////////////////////////////////////////////////////
@@ -241,3 +245,4 @@ actor {
     #ok;
   };
 };
+
